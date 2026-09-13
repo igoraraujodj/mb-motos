@@ -703,7 +703,16 @@
   /* ---------- Entrada por scroll ----------
      Os itens de uma mesma grade entram em cascata, com atraso proporcional
      à posição, o que dá o movimento sem travar a rolagem. */
-  var alvos = $$('.secao__topo, .card, .item, .selo, .passos li, .carrossel, .oferta, .local__mapa, .cartao-form');
+  var alvos = $$([
+    '.secao__topo', '.card', '.item', '.selo', '.passos li', '.carrossel',
+    '.oferta', '.local__mapa', '.cartao-form',
+    /* Acrescentados depois: o painel do topo (é ele que dispara o grifo),
+       os números da régua, as dúvidas, os blocos do contato e a fita de
+       marcas. Antes esses subiam sem movimento nenhum no meio de vizinhos
+       que subiam, e a rolagem ficava desigual. */
+    '.painel', '.regua__lista li', '.faq details', '.horarios',
+    '.contato .acoes', '.marcas', '.local__sub'
+  ].join(', '));
   if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     var obs = new IntersectionObserver(function (entradas) {
       entradas.forEach(function (e) {
