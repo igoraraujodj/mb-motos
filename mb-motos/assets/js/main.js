@@ -599,6 +599,24 @@
     return nome.split(/\s+/).slice(0, 2).map(function (p) { return p.charAt(0); }).join('').toUpperCase();
   }
 
+  /* ---------- Foto do dono no topo ----------
+     Só entra se houver arquivo na config. A versão do celular é escolhida
+     pela largura da tela no carregamento: um recorte de corpo inteiro fica
+     pequeno demais em 390px, e um fechado demais estoura no desktop. */
+  var dono = $('[data-dono]');
+  if (dono && MB.dono && MB.dono.foto) {
+    var estreito = window.innerWidth < 900;
+    var arquivo = (estreito && MB.dono.fotoMobile) ? MB.dono.fotoMobile : MB.dono.foto;
+
+    var img = $('[data-dono-img]', dono);
+    img.setAttribute('src', arquivo);
+    img.setAttribute('alt', MB.dono.nome + ', ' + MB.dono.cargo);
+
+    $('[data-dono-nome]', dono).textContent = MB.dono.nome;
+    $('[data-dono-cargo]', dono).textContent = MB.dono.cargo;
+    dono.hidden = false;
+  }
+
   /* ---------- Balão flutuante ----------
      Só aparece depois que a pessoa rola para fora do topo: no celular ele
      cobriria justamente o formulário. Quem fecha não vê de novo na visita. */

@@ -140,75 +140,83 @@
 
     <div class="hero__texto">
       <a class="status" data-status data-zap data-servico="atendimento">
-        <span class="status__ponto" aria-hidden="true"></span>
-        <span class="status__texto" data-status-texto>Carregando horário</span>
+      <span class="status__ponto" aria-hidden="true"></span>
+      <span class="status__texto" data-status-texto>Carregando horário</span>
       </a>
 
       <h1 id="hero-titulo" class="display">
-        <span class="linha">Sua moto precisa</span>
-        <span class="linha">de revisão?</span>
-        <span class="linha linha--menor"><em>Chegou no lugar certo</em></span>
+      <span class="linha">Sua moto precisa</span>
+      <span class="linha">de revisão?</span>
+      <span class="linha linha--menor"><em>Chegou no lugar certo</em></span>
       </h1>
 
       <p class="hero__sub">
-        Revisão, mecânica geral, pneu, kit relação e carenagem no mesmo
-        lugar. Cinco mecânicos, peça original em estoque e o orçamento
-        fechado com você antes de qualquer serviço começar.
+      Revisão, mecânica geral, pneu, kit relação e carenagem no mesmo
+      lugar. Cinco mecânicos, peça original em estoque e o orçamento
+      fechado com você antes de qualquer serviço começar.
       </p>
 
       <p class="hero__nota">
-        O prazo depende do que a sua moto precisar. A gente combina com você
-        junto do orçamento, antes de encostar a chave.
+      O prazo depende do que a sua moto precisar. A gente combina com você
+      junto do orçamento, antes de encostar a chave.
       </p>
 
+      
     </div>
 
-    <!-- Formulário de orçamento: o coração da conversão -->
+    <div class="hero__dono" data-dono hidden>
+      <img data-dono-img alt="" loading="eager" decoding="async">
+      <p class="hero__assinatura">
+        <strong data-dono-nome></strong>
+        <span data-dono-cargo></span>
+      </p>
+    </div>
+
     <div class="cartao-form" id="formulario">
-      <p class="mono">Orçamento em 1 minuto</p>
-      <h2 class="cartao-form__titulo">O que você precisa hoje?</h2>
+    <p class="mono">Orçamento em 1 minuto</p>
+    <h2 class="cartao-form__titulo">O que você precisa hoje?</h2>
 
-      <form class="form" data-form novalidate>
-        <label class="campo">
-          <span>Seu nome</span>
-          <input type="text" name="nome" autocomplete="name" placeholder="Ex.: Maykon Martins" required>
-        </label>
+    <form class="form" data-form novalidate>
+    <label class="campo">
+    <span>Seu nome</span>
+    <input type="text" name="nome" autocomplete="name" placeholder="Ex.: Maykon Martins" required>
+    </label>
 
-        <label class="campo">
-          <span>Modelo da moto</span>
-          <input type="text" name="moto" placeholder="Ex.: CG 160 Titan 2021" required>
-        </label>
+    <label class="campo">
+    <span>Modelo da moto</span>
+    <input type="text" name="moto" placeholder="Ex.: CG 160 Titan 2021" required>
+    </label>
 
-        <label class="campo">
-          <span>O que você está procurando</span>
-          <select name="servico" required>
-            <option value="">Escolha o serviço</option>
-            <option>Revisão completa (a partir de R$ 199)</option>
-            <option>Troca de óleo</option>
-            <option>Troca de kit relação</option>
-            <option>Pneu de moto</option>
-            <option>Carenagem e estética</option>
-            <option>Cotação de peça</option>
-            <option>Pneu de bike elétrica aro 16</option>
-            <option>Capacete</option>
-            <option>Outro serviço</option>
-          </select>
-        </label>
+    <label class="campo">
+    <span>O que você está procurando</span>
+    <select name="servico" required>
+    <option value="">Escolha o serviço</option>
+    <option>Revisão completa (a partir de R$ 199)</option>
+    <option>Troca de óleo</option>
+    <option>Troca de kit relação</option>
+    <option>Pneu de moto</option>
+    <option>Carenagem e estética</option>
+    <option>Cotação de peça</option>
+    <option>Pneu de bike elétrica aro 16</option>
+    <option>Capacete</option>
+    <option>Outro serviço</option>
+    </select>
+    </label>
 
-        <label class="campo">
-          <span>Quer contar mais alguma coisa? <i>opcional</i></span>
-          <textarea name="obs" rows="2" placeholder="Ex.: está fazendo barulho na corrente"></textarea>
-        </label>
+    <label class="campo">
+    <span>Quer contar mais alguma coisa? <i>opcional</i></span>
+    <textarea name="obs" rows="2" placeholder="Ex.: está fazendo barulho na corrente"></textarea>
+    </label>
 
-        <p class="form__erro" data-form-erro hidden></p>
+    <p class="form__erro" data-form-erro hidden></p>
 
-        <button class="btn btn--zap btn--bloco" type="submit">
-          <svg class="ic" aria-hidden="true"><use href="#ic-whats"/></svg>
-          Enviar no WhatsApp
-        </button>
+    <button class="btn btn--zap btn--bloco" type="submit">
+    <svg class="ic" aria-hidden="true"><use href="#ic-whats"/></svg>
+    Enviar no WhatsApp
+    </button>
 
-        <p class="form__nota">A mensagem abre pronta no seu WhatsApp, com os dados preenchidos. Você só aperta enviar.</p>
-      </form>
+    <p class="form__nota">A mensagem abre pronta no seu WhatsApp, com os dados preenchidos. Você só aperta enviar.</p>
+    </form>
     </div>
 
   </div>

@@ -211,6 +211,20 @@ window.MB = {
     { numero: 'Estoque', texto: 'próprio de peça, pneu e carenagem' }
   ],
 
+  /* ------------------------------------------------------------------
+     FOTO DO DONO NO TOPO
+     Recorte em PNG com fundo transparente. `foto` é a versão do desktop
+     (corpo inteiro ou três quartos) e `fotoMobile` uma versão mais fechada,
+     do peito para cima, que aguenta a tela estreita sem virar borrão.
+     Deixe em null e o topo segue sem a foto, sem quebrar nada.
+     ------------------------------------------------------------------ */
+  dono: {
+    foto: null,        /* ex.: 'assets/img/dono.png' */
+    fotoMobile: null,  /* ex.: 'assets/img/dono-mobile.png' */
+    nome: 'Maykon Martins',
+    cargo: 'Dono da MB Motos'
+  },
+
   /* Balão flutuante no canto da tela. A foto do mecânico entra em
      `foto` (ex.: 'assets/img/mascote.png'); enquanto for null, aparece um
      avatar provisório desenhado em CSS. */

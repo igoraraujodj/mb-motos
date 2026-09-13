@@ -49,6 +49,20 @@ O site é servido pelo GitHub Pages a partir da branch `main`. Todo push na
 `main` que toque esta pasta republica sozinho, em um ou dois minutos. Não há
 build: os arquivos são servidos como estão.
 
+## Foto do dono no topo
+
+Recorte em PNG com fundo transparente, apontado em `config.js`:
+
+```js
+dono: {
+  foto: 'assets/img/dono.png',          // desktop, corpo inteiro ou 3/4
+  fotoMobile: 'assets/img/dono-mob.png' // opcional, mais fechado
+}
+```
+
+Especificação do arquivo em [`FOTO-DO-DONO.md`](FOTO-DO-DONO.md), junto dos
+prompts de geração. Com `foto: null`, o topo funciona normalmente sem ele.
+
 ## Fotos das ofertas
 
 Cada oferta em `config.js` aceita um campo `foto`. Enquanto for `null`,
