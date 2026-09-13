@@ -42,8 +42,13 @@
   }
 
   $$('[data-zap]').forEach(function (el) {
+    /* `data-servico` é o rótulo da medição: diz qual bloco da página gerou a
+       conversa. Nem todo rótulo serve de mensagem — "barra fixa" e "rodapé"
+       são lugares, não serviços, e viravam frase sem sentido no WhatsApp.
+       Nesses casos o botão traz a mensagem pronta em `data-msg`. */
     var servico = el.getAttribute('data-servico') || 'atendimento geral';
-    el.setAttribute('href', linkZap(mensagemServico(servico)));
+    var texto = el.getAttribute('data-msg') || mensagemServico(servico);
+    el.setAttribute('href', linkZap(texto));
     el.setAttribute('target', '_blank');
     el.setAttribute('rel', 'noopener');
     el.addEventListener('click', function () { medir('contato_whatsapp', servico, 'Contact'); });
