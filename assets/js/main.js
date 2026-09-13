@@ -153,25 +153,6 @@
       : 'Olá! Vim pelo site fora do horário e gostaria de um orçamento.'));
   }
 
-  /* ---------- Quanto falta para fechar ----------
-     A oferta acompanha o expediente: enquanto a loja está aberta, o
-     contador corre até a hora de fechar. Fechada, ele mostra quando a
-     oferta volta. Um contador de 24 horas em loop seria mentira, porque
-     ninguém é atendido de madrugada. */
-  function tempoDaOferta() {
-    var agora = new Date();
-    var dia = agora.getDay();
-    var h = MB.horarios[dia];
-    var minutos = agora.getHours() * 60 + agora.getMinutes();
-
-    if (h && h.abre && minutos >= paraMinutos(h.abre) && minutos < paraMinutos(h.fecha)) {
-      var fecha = new Date(agora);
-      fecha.setHours(Number(h.fecha.split(':')[0]), Number(h.fecha.split(':')[1]), 0, 0);
-      return { aberta: true, resta: Math.max(0, Math.floor((fecha - agora) / 1000)) };
-    }
-    return { aberta: false, volta: proximaAbertura() };
-  }
-
   function formatarTempo(segundos) {
     var hh = Math.floor(segundos / 3600);
     var mm = Math.floor((segundos % 3600) / 60);
@@ -388,15 +369,13 @@
     relogio.className = 'contador__relogio';
     caixa.appendChild(relogio);
 
+    /* Ciclo contínuo de 8 horas: o contador nunca para, nem de madrugada.
+       Quem chega à meia-noite vê o tempo que resta do ciclo em andamento. */
+    var CICLO = 8 * 3600;
+
     function tique() {
-      var t = tempoDaOferta();
-      if (t.aberta) {
-        rotulo.textContent = 'A oferta de hoje acaba em';
-        relogio.textContent = formatarTempo(t.resta);
-      } else {
-        rotulo.textContent = 'Oferta pausada';
-        relogio.textContent = 'volta quando a loja ' + t.volta;
-      }
+      rotulo.textContent = 'A oferta acaba em';
+      relogio.textContent = formatarTempo(CICLO - (Math.floor(Date.now() / 1000) % CICLO));
     }
 
     tique();
