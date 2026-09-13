@@ -218,7 +218,6 @@ h3 { font-size: var(--t-h3); letter-spacing: -.02em; }
   .hero__sub   { order: 3; margin: 0; }
   .cartao-form { order: 4; margin-top: .5rem; }
   .hero__nota  { order: 5; margin: 0; }
-  .hero__provas{ order: 6; margin-top: 1rem; }
 }
 
 .hero__sub { font-size: clamp(1.05rem, 1rem + .5vw, 1.3rem); color: var(--texto-2); max-width: 46ch; }
@@ -248,30 +247,35 @@ h3 { font-size: var(--t-h3); letter-spacing: -.02em; }
 }
 @media (prefers-reduced-motion: reduce) { .status[data-aberto] .status__ponto { animation: none; } }
 
-/* Três provas em coluna própria, com régua entre elas. O número e a frase
-   ficam alinhados pelo topo, senão números de larguras diferentes ("5" e
-   "20 min") desencontram as linhas de texto. */
-.hero__provas {
+/* ---------- RÉGUA DE NÚMEROS ----------
+   Faixa própria entre o topo e os selos. Saiu de dentro do hero porque ali
+   disputava atenção com o formulário; aqui vira uma pausa de leitura antes
+   dos serviços. */
+.regua { border-block: 1px solid var(--linha); background: var(--carvao); }
+.regua__lista {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
-  list-style: none; margin: 2.5rem 0 0; padding: 1.5rem 0 0; border-top: 1px solid var(--linha);
+  list-style: none; margin: 0; padding: 0;
 }
-.hero__provas li { padding-inline: 1rem; }
-.hero__provas li:first-child { padding-left: 0; }
-.hero__provas li:last-child { padding-right: 0; }
-.hero__provas li + li { border-left: 1px solid var(--linha); }
-.hero__provas strong { display: block; margin-bottom: .35rem; font-size: clamp(1.2rem, 1rem + .9vw, 1.7rem); letter-spacing: -.04em; line-height: 1; }
-.hero__provas span { display: block; font-size: .8rem; color: var(--texto-2); line-height: 1.35; }
+.regua__lista li {
+  display: flex; flex-direction: column; gap: .45rem;
+  padding: clamp(1.5rem, 1rem + 1.6vw, 2.5rem) clamp(1rem, .5rem + 1.5vw, 2rem);
+}
+.regua__lista li + li { border-left: 1px solid var(--linha); }
+.regua__lista strong {
+  font-size: clamp(1.6rem, 1.1rem + 2vw, 3rem); line-height: .9;
+  letter-spacing: -.045em; color: var(--amarelo);
+}
+.regua__lista span { font-size: clamp(.78rem, .74rem + .2vw, .92rem); color: var(--texto-2); line-height: 1.35; max-width: 26ch; }
 
-@media (max-width: 520px) {
-  /* Em tela estreita, três colunas espremem a frase em uma palavra por
-     linha. Vira lista de linhas, com o número à esquerda. */
-  .hero__provas { grid-template-columns: 1fr; }
-  .hero__provas li { display: flex; align-items: baseline; gap: .65rem; padding: .7rem 0; border-left: 0; }
-  .hero__provas li + li { border-top: 1px solid var(--linha); }
-  .hero__provas strong { margin-bottom: 0; flex: none; min-width: 3.6rem; }
+@media (max-width: 620px) {
+  /* Três colunas estreitas espremem a frase em uma palavra por linha.
+     Vira lista, com o número à esquerda. */
+  .regua__lista { grid-template-columns: 1fr; }
+  .regua__lista li { flex-direction: row; align-items: baseline; gap: .8rem; padding: 1rem clamp(1rem, .4rem + 2.4vw, 2rem); }
+  .regua__lista li + li { border-left: 0; border-top: 1px solid var(--linha); }
+  .regua__lista strong { flex: none; min-width: 4.2rem; font-size: 1.5rem; }
 }
 
-/* ---------- 7. FORMULÁRIO ---------- */
 .cartao-form {
   background: var(--branco); color: var(--preto);
   border-radius: var(--r-grande); padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
@@ -359,14 +363,14 @@ h3 { font-size: var(--t-h3); letter-spacing: -.02em; }
 }
 .selo::before, .selo::after { content: ''; position: absolute; border-radius: inherit; }
 .selo::before {
-  inset: -3px; z-index: 0; border-radius: calc(var(--r-card) + 3px);
+  inset: -1px; z-index: 0; border-radius: calc(var(--r-card) + 1px);
+  /* Arco curto e de baixa intensidade: a luz passa e some, em vez de
+     deixar um contorno vermelho aceso o tempo todo. */
   background: conic-gradient(from var(--giro, 0deg),
-    transparent 0deg, transparent 258deg,
-    rgba(227,6,19,.45) 296deg, #FF2D1A 328deg, rgba(227,6,19,.45) 354deg, transparent 360deg);
-  /* o desfoque é o que transforma a linha em neon, e ainda joga um halo
-     para fora da borda */
-  filter: blur(2.5px);
-  animation: girar 5s linear infinite;
+    transparent 0deg, transparent 300deg,
+    rgba(227,6,19,.16) 322deg, rgba(255,45,26,.7) 340deg, rgba(227,6,19,.16) 352deg, transparent 360deg);
+  filter: blur(1px);
+  animation: girar 7s linear infinite;
 }
 .selo::after { inset: 0; z-index: 1; background: var(--carvao); }
 .selo > * { position: relative; z-index: 2; }
@@ -404,50 +408,67 @@ h3 { font-size: var(--t-h3); letter-spacing: -.02em; }
 .card--cta .btn:hover { background: var(--grafite); }
 
 /* ---------- 12. OFERTAS ---------- */
-.ofertas { display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); }
+.ofertas { display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); }
 
+/* Dois blocos irmãos, corpo e lado, em vez de posicionar cada filho na
+   grade. O layout anterior prendia a lista na linha 1 até a 6, e bastou o
+   card ganhar o contador para tudo se desencontrar. */
 .oferta {
-  display: flex; flex-direction: column; align-items: flex-start;
+  display: grid; gap: clamp(1.25rem, 1rem + 1.5vw, 2.5rem);
   padding: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
   background: var(--carvao); border-radius: var(--r-card);
 }
+.oferta__corpo { display: flex; flex-direction: column; align-items: flex-start; }
+.oferta__lado { display: flex; flex-direction: column; justify-content: center; }
+
 .oferta__selo {
-  display: inline-block; margin: 0 0 1.25rem; padding: .35rem .8rem;
+  display: inline-block; margin: 0 0 1rem; padding: .35rem .8rem;
   background: var(--grafite); color: var(--texto-2); border-radius: var(--r-pill);
   font-family: var(--mono); font-size: var(--t-mono); letter-spacing: .1em; text-transform: uppercase;
 }
-.oferta h3 { font-size: clamp(1.3rem, 1.1rem + .8vw, 1.75rem); text-transform: uppercase; letter-spacing: -.03em; }
-.oferta__resumo { color: var(--texto-2); font-size: .96rem; }
-.oferta__preco { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem; margin: .5rem 0 1.5rem; }
-.oferta__prefixo { width: 100%; font-size: .85rem; color: var(--texto-3); }
-.oferta--destaque .oferta__prefixo { color: #6E6E76; }
-.oferta__preco s { color: var(--texto-3); }
-.oferta__preco strong { font-size: clamp(2.1rem, 1.4rem + 2.6vw, 3.6rem); letter-spacing: -.045em; line-height: .9; text-transform: uppercase; }
-.oferta__preco span { font-size: .82rem; color: var(--texto-3); }
-.oferta .btn { margin-top: auto; }
-.oferta__quando { margin: 1rem 0 0; font-family: var(--mono); font-size: var(--t-mono); letter-spacing: .06em; text-transform: uppercase; }
-.oferta__obs { margin: .6rem 0 0; font-size: .76rem; line-height: 1.5; color: var(--texto-3); }
+.oferta h3 { font-size: clamp(1.35rem, 1.1rem + .9vw, 2rem); text-transform: uppercase; letter-spacing: -.03em; }
+.oferta__resumo { color: var(--texto-2); font-size: .96rem; max-width: 42ch; }
 
-/* A oferta âncora inverte para branco: é o bloco que precisa gritar. */
-.oferta--destaque { background: var(--branco); color: var(--preto); border-radius: var(--r-grande); }
+/* "De R$ 280 por" em cima, valor grande embaixo: a conta que o leitor faz
+   de cabeça é a diferença entre os dois números. */
+.oferta__preco { display: flex; flex-wrap: wrap; align-items: baseline; gap: .1rem .6rem; margin: .75rem 0 1.75rem; }
+.oferta__de, .oferta__prefixo { width: 100%; font-size: .88rem; color: var(--texto-3); }
+.oferta__de s { color: var(--texto-2); }
+.oferta__preco strong { font-size: clamp(2.4rem, 1.6rem + 3vw, 4rem); letter-spacing: -.05em; line-height: .85; }
+.oferta__nota { width: 100%; margin-top: .4rem; font-size: .82rem; color: var(--texto-3); }
+
+.oferta .btn { margin-top: auto; }
+.oferta__quando {
+  display: inline-flex; align-items: center; gap: .4rem; margin: 1rem 0 0;
+  font-family: var(--mono); font-size: var(--t-mono); letter-spacing: .06em; text-transform: uppercase;
+}
+.oferta__quando .ic { width: 14px; height: 14px; }
+.oferta__obs { margin: 1.25rem 0 0; font-size: .76rem; line-height: 1.5; color: var(--texto-3); }
+
+/* Espaço da foto nas ofertas secundárias. Sem imagem, fica a área marcada
+   com o nome do que entra ali. */
+.oferta__foto { border-radius: 14px; overflow: hidden; min-height: 190px; }
+.oferta__foto img { width: 100%; height: 100%; object-fit: cover; }
+
+.oferta--destaque {
+  grid-column: 1 / -1; background: var(--branco); color: var(--preto);
+  border-radius: var(--r-grande); padding: clamp(1.75rem, 1rem + 2vw, 3rem);
+}
 .oferta--destaque .oferta__selo { background: var(--amarelo); color: var(--preto); }
 .oferta--destaque .oferta__resumo { color: #44444A; }
-.oferta--destaque .oferta__preco s { color: #9A9AA0; }
-.oferta--destaque .oferta__preco span { color: #6E6E76; }
+.oferta--destaque .oferta__de { color: #6E6E76; }
+.oferta--destaque .oferta__de s { color: #9A9AA0; }
+.oferta--destaque .oferta__prefixo,
+.oferta--destaque .oferta__nota,
 .oferta--destaque .oferta__obs { color: #6E6E76; }
+.oferta--destaque .oferta__quando { color: var(--vermelho); }
 .oferta--destaque .lista-check li { color: #2A2A2E; }
 .oferta--destaque .lista-check .ic { color: var(--preto); }
+.oferta--destaque .btn { margin-top: 0; }
 
-@media (min-width: 780px) {
-  .oferta--destaque {
-    grid-column: 1 / -1;
-    display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(1.5rem, 1rem + 2vw, 3.5rem);
-    align-items: start;
-  }
-  .oferta--destaque > * { grid-column: 1; }
-  .oferta--destaque .lista-check { grid-column: 2; grid-row: 1 / 6; margin: 0; align-self: center; }
-  .oferta--destaque .btn { justify-self: start; margin-top: .5rem; }
-  .oferta--destaque .oferta__obs { grid-column: 1 / -1; }
+@media (min-width: 760px) {
+  .oferta { grid-template-columns: 1.15fr .85fr; align-items: stretch; }
+  .oferta__obs { grid-column: 1 / -1; }
 }
 
 .lista-check { list-style: none; margin: 0 0 1.75rem; padding: 0; display: grid; gap: .75rem; }
@@ -476,7 +497,14 @@ h3 { font-size: var(--t-h3); letter-spacing: -.02em; }
   animation: desliza 34s linear infinite;
 }
 .fita-marcas:hover .fita-marcas__trilho { animation-play-state: paused; }
-.fita-marcas__trilho li { font-size: clamp(1.15rem, 1rem + .8vw, 1.6rem); font-weight: 600; letter-spacing: -.03em; color: var(--texto-3); white-space: nowrap; }
+/* No hover a marca acende na cor dela e a fita para de correr, para dar
+   tempo de ler. A cor vem de --cor-marca, definida item a item pelo JS. */
+.fita-marcas__trilho li {
+  font-size: clamp(1.15rem, 1rem + .8vw, 1.6rem); font-weight: 600; letter-spacing: -.03em;
+  color: var(--texto-3); white-space: nowrap; cursor: default;
+  transition: color .25s ease, transform .25s ease;
+}
+.fita-marcas__trilho li:hover { color: var(--cor-marca, var(--branco)); transform: scale(1.06); }
 .fita-marcas__trilho img { max-height: 30px; width: auto; }
 @keyframes desliza { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) {
@@ -495,14 +523,30 @@ h3 { font-size: var(--t-h3); letter-spacing: -.02em; }
 .item .link-seta { font-size: .9rem; padding-top: .75rem; }
 
 /* ---------- 15. PASSOS ---------- */
-/* Os cinco passos acendem em sequência, um por vez, para o olho seguir o
-   fluxo na ordem em que ele acontece na oficina. */
-.passos { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr)); }
-.passos li { position: relative; padding: 2.5rem 1.5rem 1.5rem; background: var(--carvao); border-radius: var(--r-card); }
+/* ---------- FLUXO DE CINCO PASSOS ----------
+   Os cartões ficam ligados por uma linha contínua, com o marcador de cada
+   etapa em cima dela. A luz corre de um passo ao outro, na ordem em que
+   as coisas acontecem na oficina. */
+.passos {
+  position: relative; list-style: none; margin: 0; padding: 0;
+  display: grid; gap: var(--gap);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+}
+.passos li {
+  position: relative; padding: 2.75rem 1.5rem 1.5rem;
+  background: var(--carvao); border-radius: var(--r-card);
+}
+
+/* O trilho: um traço que sai de cada cartão e encosta no próximo. */
+.passos li:not(:last-child)::after {
+  content: ''; position: absolute; z-index: 1;
+  left: 100%; top: 2.05rem; width: var(--gap); height: 1px;
+  background: linear-gradient(90deg, var(--linha), var(--amarelo));
+}
 .passos .mono { color: var(--amarelo); margin-bottom: 1rem; }
 
 .passos__marca {
-  position: absolute; top: 1.5rem; left: 1.5rem;
+  position: absolute; top: 1.6rem; left: 1.5rem;
   width: 11px; height: 11px; border-radius: 50%;
   background: var(--linha); color: var(--amarelo);
   animation: acende 7.5s ease-in-out infinite;
@@ -513,11 +557,20 @@ h3 { font-size: var(--t-h3); letter-spacing: -.02em; }
 .passos li:nth-child(5) .passos__marca { animation-delay: 6s; }
 
 @keyframes acende {
-  0%, 20%  { background: var(--amarelo); box-shadow: 0 0 0 0 currentColor; }
-  10%      { box-shadow: 0 0 0 8px transparent; }
-  22%, 100%{ background: var(--linha); box-shadow: none; }
+  0%, 20%   { background: var(--amarelo); box-shadow: 0 0 0 0 currentColor; }
+  10%       { box-shadow: 0 0 0 8px transparent; }
+  22%, 100% { background: var(--linha); box-shadow: none; }
 }
 @media (prefers-reduced-motion: reduce) { .passos__marca { animation: none; background: var(--amarelo); } }
+
+/* Empilhado, o trilho vira vertical, ligando um cartão ao de baixo. */
+@media (max-width: 680px) {
+  .passos li:not(:last-child)::after {
+    left: 2rem; top: 100%; width: 1px; height: var(--gap);
+    background: linear-gradient(180deg, var(--linha), var(--amarelo));
+  }
+}
+
 .passos h3 { margin-bottom: .4rem; }
 .passos p { font-size: .9rem; color: var(--texto-2); margin: 0; }
 .passos__nota { margin-top: 2rem; }
@@ -600,7 +653,7 @@ h3 { font-size: var(--t-h3); letter-spacing: -.02em; }
 .local address { font-style: normal; font-size: 1.15rem; font-weight: 500; }
 .local__sub { font-size: .95rem; text-transform: uppercase; letter-spacing: -.02em; margin: 2.25rem 0 .75rem; }
 .local__mapa { min-height: 380px; height: 100%; border-radius: var(--r-grande); overflow: hidden; background: var(--carvao); }
-.local__mapa iframe { width: 100%; height: 100%; min-height: 380px; border: 0; filter: grayscale(1) invert(.92) contrast(.85); }
+.local__mapa iframe { width: 100%; height: 100%; min-height: 380px; border: 0; }
 
 .horarios { width: 100%; border-collapse: collapse; font-size: .95rem; }
 .horarios td { padding: .6rem 0; border-bottom: 1px solid var(--linha); color: var(--texto-2); }

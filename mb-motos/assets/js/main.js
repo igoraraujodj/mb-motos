@@ -191,13 +191,17 @@
   /* ---------- Provas do topo ---------- */
   var provasEl = $('[data-provas]');
   if (provasEl && MB.provas) {
-    MB.provas.forEach(function (p) {
+    MB.provas.forEach(function (p, i) {
       var li = document.createElement('li');
+      li.style.setProperty('--i', i);
+
       var strong = document.createElement('strong');
       strong.textContent = p.numero;
       var span = document.createElement('span');
       span.textContent = p.texto;
-      li.appendChild(strong); li.appendChild(span);
+
+      li.appendChild(strong);
+      li.appendChild(span);
       provasEl.appendChild(li);
     });
   }
@@ -273,45 +277,55 @@
     var art = document.createElement('article');
     art.className = 'oferta' + (o.destaque ? ' oferta--destaque' : '');
 
+    /* Dois blocos irmãos em vez de posicionar cada filho na grade: o
+       layout anterior fixava a lista na linha 1 até a 6, e bastou o card
+       ganhar um elemento novo (o contador) para tudo se desencontrar. */
+    var corpo = document.createElement('div');
+    corpo.className = 'oferta__corpo';
+    var lado = document.createElement('div');
+    lado.className = 'oferta__lado';
+
     var selo = document.createElement('p');
     selo.className = 'oferta__selo';
     selo.textContent = o.selo;
-    art.appendChild(selo);
+    corpo.appendChild(selo);
 
     var h3 = document.createElement('h3');
     h3.textContent = o.titulo;
-    art.appendChild(h3);
+    corpo.appendChild(h3);
 
     if (o.resumo) {
       var resumo = document.createElement('p');
       resumo.className = 'oferta__resumo';
       resumo.textContent = o.resumo;
-      art.appendChild(resumo);
+      corpo.appendChild(resumo);
     }
 
-    var preco = document.createElement('p');
-    preco.className = 'oferta__preco';
-    if (o.precoPrefixo) {
-      var prefixo = document.createElement('span');
-      prefixo.className = 'oferta__prefixo';
-      prefixo.textContent = o.precoPrefixo;
-      preco.appendChild(prefixo);
-    }
-    if (o.precoDe) {
-      var de = document.createElement('s');
-      de.textContent = o.precoDe;
-      preco.appendChild(de);
-    }
-    var valor = document.createElement('strong');
-    valor.textContent = o.preco;
-    preco.appendChild(valor);
-    if (o.precoNota) {
-      var nota = document.createElement('span');
-      nota.textContent = o.precoNota;
-      preco.appendChild(nota);
-    }
-    art.appendChild(preco);
+    corpo.appendChild(montarPreco(o));
 
+    var cta = document.createElement('a');
+    cta.className = 'btn ' + (o.destaque ? 'btn--zap btn--g' : 'btn--claro');
+    cta.setAttribute('href', linkZap('Olá! Vim pelo site e quero a oferta: ' + o.titulo + '.'));
+    cta.setAttribute('target', '_blank');
+    cta.setAttribute('rel', 'noopener');
+    cta.appendChild(icone('ic-whats'));
+    cta.appendChild(document.createTextNode(o.cta || 'Quero essa oferta'));
+    cta.addEventListener('click', function () { medir('contato_whatsapp', 'oferta ' + o.id, 'Contact'); });
+    corpo.appendChild(cta);
+
+    if (o.contador) corpo.appendChild(montarContador());
+
+    var quando = proximaData(o.diaSemana);
+    if (quando) {
+      var p = document.createElement('p');
+      p.className = 'oferta__quando';
+      p.appendChild(icone('ic-relogio'));
+      p.appendChild(document.createTextNode(quando));
+      corpo.appendChild(p);
+    }
+
+    /* Coluna da direita: a lista de itens na oferta âncora, a foto nas
+       outras. Enquanto a foto não chega, fica a área marcada. */
     if (o.itens && o.itens.length) {
       var ul = document.createElement('ul');
       ul.className = 'lista-check';
@@ -323,28 +337,27 @@
         li.appendChild(span);
         ul.appendChild(li);
       });
-      art.appendChild(ul);
+      lado.appendChild(ul);
     }
 
-    var cta = document.createElement('a');
-    cta.className = 'btn ' + (o.destaque ? 'btn--zap btn--g' : 'btn--claro');
-    cta.setAttribute('href', linkZap('Olá! Vim pelo site e quero a oferta: ' + o.titulo + '.'));
-    cta.setAttribute('target', '_blank');
-    cta.setAttribute('rel', 'noopener');
-    cta.appendChild(icone('ic-whats'));
-    cta.appendChild(document.createTextNode(o.cta || 'Quero essa oferta'));
-    cta.addEventListener('click', function () { medir('contato_whatsapp', 'oferta ' + o.id, 'Contact'); });
-    art.appendChild(cta);
-
-    if (o.contador) art.appendChild(montarContador());
-
-    var quando = proximaData(o.diaSemana);
-    if (quando) {
-      var p = document.createElement('p');
-      p.className = 'oferta__quando';
-      p.textContent = quando;
-      art.appendChild(p);
+    if (!o.destaque) {
+      var foto = document.createElement('div');
+      foto.className = 'oferta__foto';
+      if (o.foto) {
+        var img = document.createElement('img');
+        img.src = o.foto;
+        img.alt = o.titulo;
+        img.loading = 'lazy';
+        foto.appendChild(img);
+      } else {
+        foto.classList.add('ph');
+        foto.setAttribute('data-ph', 'Foto de ' + o.titulo.toLowerCase());
+      }
+      lado.appendChild(foto);
     }
+
+    art.appendChild(corpo);
+    art.appendChild(lado);
 
     if (o.obs) {
       var obs = document.createElement('p');
@@ -354,6 +367,43 @@
     }
 
     return art;
+  }
+
+  /* "De R$ 280 por a partir de R$ 199": o preço antigo cortado ao lado do
+     novo é o que faz a conta na cabeça de quem lê. */
+  function montarPreco(o) {
+    var preco = document.createElement('p');
+    preco.className = 'oferta__preco';
+
+    if (o.precoDe) {
+      var de = document.createElement('span');
+      de.className = 'oferta__de';
+      de.appendChild(document.createTextNode('De '));
+      var risco = document.createElement('s');
+      risco.textContent = o.precoDe;
+      de.appendChild(risco);
+      de.appendChild(document.createTextNode(' por'));
+      preco.appendChild(de);
+    }
+
+    if (o.precoPrefixo) {
+      var prefixo = document.createElement('span');
+      prefixo.className = 'oferta__prefixo';
+      prefixo.textContent = o.precoPrefixo;
+      preco.appendChild(prefixo);
+    }
+
+    var valor = document.createElement('strong');
+    valor.textContent = o.preco;
+    preco.appendChild(valor);
+
+    if (o.precoNota) {
+      var nota = document.createElement('span');
+      nota.className = 'oferta__nota';
+      nota.textContent = o.precoNota;
+      preco.appendChild(nota);
+    }
+    return preco;
   }
 
   /* Contador amarrado ao expediente da oficina. */
@@ -402,6 +452,7 @@
       MB.marcas.forEach(function (m) {
         var li = document.createElement('li');
         if (copia === 1) li.setAttribute('aria-hidden', 'true');
+        if (m.cor) li.style.setProperty('--cor-marca', m.cor);
         if (m.logo) {
           var img = document.createElement('img');
           img.src = m.logo;

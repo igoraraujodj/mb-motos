@@ -49,6 +49,17 @@ O site é servido pelo GitHub Pages a partir da branch `main`. Todo push na
 `main` que toque esta pasta republica sozinho, em um ou dois minutos. Não há
 build: os arquivos são servidos como estão.
 
+## Fotos das ofertas
+
+Cada oferta em `config.js` aceita um campo `foto`. Enquanto for `null`,
+aparece a área marcada com o nome do que entra ali. Para publicar:
+
+1. Suba a imagem em `assets/img/` (ex.: `oferta-capacete.jpg`)
+2. No `config.js`, troque `foto: null` por `foto: 'assets/img/oferta-capacete.jpg'`
+
+Proporção livre: a imagem é recortada para preencher o espaço, centralizada.
+Largura de 900px já é suficiente.
+
 ## Ofertas
 
 As três ofertas definidas com o cliente ficam em `config.js`, no array

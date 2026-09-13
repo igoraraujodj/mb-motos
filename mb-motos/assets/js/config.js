@@ -61,6 +61,7 @@ window.MB = {
       precoPrefixo: 'a partir de',
       preco: 'R$ 199',
       precoNota: 'mão de obra e lubrificação',
+      foto: null,
       diaSemana: null,
       resumo: 'Revisão completa da sua moto com 1 litro de óleo Mobil por nossa conta e lavagem de cortesia na entrega.',
       itens: [
@@ -79,6 +80,8 @@ window.MB = {
       destaque: false,
       selo: 'Toda quinta-feira',
       titulo: 'Quinta do Capacete',
+      /* troque por 'assets/img/oferta-capacete.jpg' quando a foto chegar */
+      foto: null,
       preco: '25% OFF',
       precoNota: 'no Pix ou dinheiro',
       diaSemana: 4,
@@ -97,6 +100,8 @@ window.MB = {
       destaque: false,
       selo: 'Novidade',
       titulo: 'Pneu de bike elétrica aro 16',
+      /* troque por 'assets/img/oferta-pneu-bike.jpg' quando a foto chegar */
+      foto: null,
       /* CONFERIR com o cliente: valor final e se a montagem está inclusa */
       preco: 'R$ 300',
       precoNota: 'o pneu, mão de obra à parte',
@@ -114,19 +119,22 @@ window.MB = {
 
   /* Fita animada de marcas. Quando tiver os logos, troque `logo: null`
      pelo caminho do arquivo em assets/img/marcas/. */
+  /* `cor` é a cor da marca, que acende quando o mouse passa por cima.
+     São aproximações das cores oficiais: se algum logo chegar, o arquivo
+     entra em `logo` e a cor deixa de importar. */
   marcas: [
-    { nome: 'Honda', logo: null },
-    { nome: 'Yamaha', logo: null },
-    { nome: 'Suzuki', logo: null },
-    { nome: 'Kawasaki', logo: null },
-    { nome: 'BMW', logo: null },
-    { nome: 'Royal Enfield', logo: null },
-    { nome: 'Haojue', logo: null },
-    { nome: 'Shineray', logo: null },
-    { nome: 'Mobil', logo: null },
-    { nome: 'Maggion', logo: null },
-    { nome: 'Norisk', logo: null },
-    { nome: 'Pro Tork', logo: null }
+    { nome: 'Honda',         cor: '#E4002B', logo: null },
+    { nome: 'Yamaha',        cor: '#2D64B3', logo: null },
+    { nome: 'Suzuki',        cor: '#0D5EAF', logo: null },
+    { nome: 'Kawasaki',      cor: '#69BE28', logo: null },
+    { nome: 'BMW',           cor: '#0066B1', logo: null },
+    { nome: 'Royal Enfield', cor: '#C8102E', logo: null },
+    { nome: 'Haojue',        cor: '#E32119', logo: null },
+    { nome: 'Shineray',      cor: '#ED1C24', logo: null },
+    { nome: 'Mobil',         cor: '#E4002B', logo: null },
+    { nome: 'Maggion',       cor: '#0A4EA2', logo: null },
+    { nome: 'Norisk',        cor: '#00A3E0', logo: null },
+    { nome: 'Pro Tork',      cor: '#F58220', logo: null }
   ],
 
   /* ------------------------------------------------------------------
