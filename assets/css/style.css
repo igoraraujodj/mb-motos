@@ -35,7 +35,7 @@
 
   /* Escala. O display é o personagem da página: enorme, entrelinha
      comprimida, tracking negativo. */
-  --t-display: clamp(2.5rem, 1rem + 7.6vw, 8.5rem);
+  --t-display: clamp(2.4rem, .9rem + 3.6vw, 4.6rem);
   --t-titulo:  clamp(2rem, 1.1rem + 4vw, 4.25rem);
   --t-h3:      clamp(1.15rem, 1rem + .5vw, 1.45rem);
   --t-base:    clamp(1rem, .96rem + .2vw, 1.125rem);
@@ -49,8 +49,8 @@
 
   /* Forma */
   --r-btn:    10px;
-  --r-card:   28px;
-  --r-grande: 48px;
+  --r-card:   18px;
+  --r-grande: 24px;
   --r-pill:   999px;
 
   --barra-h: 68px;
@@ -102,6 +102,9 @@ a { color: inherit; text-decoration: none; }
 .display--md { font-size: clamp(2.5rem, 1.2rem + 6vw, 5rem); }
 .display em { font-style: normal; color: var(--amarelo); }
 .display .linha { display: block; }
+/* A segunda parte do título entra menor: é resposta, não pergunta, e no
+   mesmo corpo da pergunta ela competia pela mesma atenção. */
+.display .linha--menor { font-size: .46em; letter-spacing: -.025em; margin-top: .45em; }
 
 .titulo {
   font-size: var(--t-titulo); line-height: .95; letter-spacing: -.033em;
@@ -225,8 +228,9 @@ h3 { font-size: var(--t-h3); letter-spacing: -.02em; }
 
 /* Status: verde aberto, vermelho fechado, sempre pulsando. */
 .status {
-  display: inline-flex; align-items: center; gap: .6rem;
-  padding: .55rem 1.1rem .55rem .8rem; margin-bottom: 1.75rem;
+  display: inline-flex; align-items: center; gap: .55rem;
+  max-width: 100%; padding: .5rem 1rem .5rem .75rem; margin-bottom: 1.5rem;
+  font-size: .85rem; line-height: 1.25;
   border: 1px solid var(--linha); border-radius: var(--r-pill);
   font-size: .92rem; font-weight: 500; cursor: pointer;
   transition: border-color .2s ease, transform .2s ease;
@@ -244,12 +248,28 @@ h3 { font-size: var(--t-h3); letter-spacing: -.02em; }
 }
 @media (prefers-reduced-motion: reduce) { .status[data-aberto] .status__ponto { animation: none; } }
 
+/* Três provas em coluna própria, com régua entre elas. O número e a frase
+   ficam alinhados pelo topo, senão números de larguras diferentes ("5" e
+   "20 min") desencontram as linhas de texto. */
 .hero__provas {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: var(--gap);
-  list-style: none; margin: 2.5rem 0 0; padding: 1.75rem 0 0; border-top: 1px solid var(--linha);
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+  list-style: none; margin: 2.5rem 0 0; padding: 1.5rem 0 0; border-top: 1px solid var(--linha);
 }
-.hero__provas strong { display: block; font-size: 1.9rem; letter-spacing: -.04em; }
-.hero__provas span { font-size: .82rem; color: var(--texto-3); line-height: 1.35; }
+.hero__provas li { padding-inline: 1rem; }
+.hero__provas li:first-child { padding-left: 0; }
+.hero__provas li:last-child { padding-right: 0; }
+.hero__provas li + li { border-left: 1px solid var(--linha); }
+.hero__provas strong { display: block; margin-bottom: .35rem; font-size: clamp(1.2rem, 1rem + .9vw, 1.7rem); letter-spacing: -.04em; line-height: 1; }
+.hero__provas span { display: block; font-size: .8rem; color: var(--texto-2); line-height: 1.35; }
+
+@media (max-width: 520px) {
+  /* Em tela estreita, três colunas espremem a frase em uma palavra por
+     linha. Vira lista de linhas, com o número à esquerda. */
+  .hero__provas { grid-template-columns: 1fr; }
+  .hero__provas li { display: flex; align-items: baseline; gap: .65rem; padding: .7rem 0; border-left: 0; }
+  .hero__provas li + li { border-top: 1px solid var(--linha); }
+  .hero__provas strong { margin-bottom: 0; flex: none; min-width: 3.6rem; }
+}
 
 /* ---------- 7. FORMULÁRIO ---------- */
 .cartao-form {
@@ -285,36 +305,33 @@ h3 { font-size: var(--t-h3); letter-spacing: -.02em; }
 .form__nota { margin: 0; font-size: .78rem; line-height: 1.45; color: #6E6E76; text-align: center; }
 
 /* ---------- 8. BARRA DE CHAMADAS ----------
-   Faixa amarela logo abaixo do topo. A mensagem troca sozinha, com um
-   fade curto: o olho percebe a mudança sem perder a linha de leitura. */
+   Altura fixa e frase de uma linha só. A barra pulava porque cada
+   mensagem tinha uma altura diferente e o bloco se reajustava a cada
+   troca. Agora o espaço é reservado e só o texto troca, com fade curto. */
 .barra-oferta { background: var(--amarelo); color: var(--preto); }
 .barra-oferta__linha {
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
-  gap: .5rem 1.5rem; padding-block: .9rem;
+  display: flex; align-items: center; justify-content: center;
+  gap: 1.5rem; height: 62px; padding-block: 0;
 }
+@media (min-width: 900px) { .barra-oferta__linha { height: 56px; } }
 
-.barra-oferta__msg { display: grid; gap: .1rem; text-align: center; transition: opacity .3s ease, transform .3s ease; }
-.barra-oferta__msg.trocando { opacity: 0; transform: translateY(-6px); }
-.barra-oferta__msg strong { font-size: clamp(1rem, .95rem + .5vw, 1.25rem); letter-spacing: -.03em; text-transform: uppercase; }
-.barra-oferta__msg span { font-size: .85rem; opacity: .75; }
-
-.barra-oferta__contador {
-  display: inline-flex; align-items: center; gap: .4rem; margin: 0;
-  padding: .35rem .8rem; border-radius: var(--r-pill);
-  background: rgba(0,0,0,.08);
-  font-family: var(--mono); font-size: var(--t-mono); letter-spacing: .04em; text-transform: uppercase;
-  font-variant-numeric: tabular-nums;
+.barra-oferta__msg {
+  display: inline-flex; align-items: center; gap: .5rem;
+  min-width: 0; font-weight: 600; font-size: clamp(.85rem, .8rem + .45vw, 1.05rem);
+  letter-spacing: -.02em; text-align: center;
+  transition: opacity .3s ease, transform .3s ease;
 }
-.barra-oferta__contador .ic { width: 14px; height: 14px; }
+.barra-oferta__msg span { min-width: 0; max-height: 2.6em; overflow: hidden; }
+.barra-oferta__msg .ic { width: 16px; height: 16px; flex: none; }
+.barra-oferta__msg.trocando { opacity: 0; transform: translateY(-4px); }
+.barra-oferta__msg:hover .ic { transform: translateX(4px); transition: transform .2s ease; }
 
-/* O botão só aparece no desktop: no celular a barra fixa de baixo já
-   resolve a ação, e mais um botão aqui só empurraria o conteúdo. */
-.barra-oferta__cta { display: none; padding: .6rem 1.1rem; font-size: .92rem; }
+.barra-oferta__cta { display: none; padding: .55rem 1.05rem; font-size: .9rem; }
 .btn--escuro { background: var(--preto); color: var(--branco); }
 .btn--escuro:hover { background: var(--grafite); }
 @media (min-width: 900px) {
-  .barra-oferta__linha { justify-content: space-between; flex-wrap: nowrap; text-align: left; }
-  .barra-oferta__msg { text-align: left; margin-right: auto; }
+  .barra-oferta__linha { justify-content: space-between; }
+  .barra-oferta__msg { margin-inline: auto; }
   .barra-oferta__cta { display: inline-flex; }
 }
 
@@ -331,7 +348,42 @@ h3 { font-size: var(--t-h3); letter-spacing: -.02em; }
 
 /* ---------- 10. FAIXA DE CONFIANÇA ---------- */
 .faixa { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: var(--gap); }
-.selo { padding: 1.75rem; background: var(--carvao); border-radius: var(--r-card); }
+/* Contorno de neon girando em volta do selo.
+   São três camadas: o gradiente cônico atrás, o fundo do card por cima
+   dele cobrindo tudo menos a borda, e o conteúdo acima dos dois. Sem a
+   camada do meio o gradiente aparece por dentro do card, porque filho com
+   z-index negativo é pintado ACIMA do fundo do próprio pai. */
+.selo {
+  position: relative; padding: 1.75rem; border-radius: var(--r-card);
+  background: transparent; isolation: isolate;
+}
+.selo::before, .selo::after { content: ''; position: absolute; border-radius: inherit; }
+.selo::before {
+  inset: -3px; z-index: 0; border-radius: calc(var(--r-card) + 3px);
+  background: conic-gradient(from var(--giro, 0deg),
+    transparent 0deg, transparent 258deg,
+    rgba(227,6,19,.45) 296deg, #FF2D1A 328deg, rgba(227,6,19,.45) 354deg, transparent 360deg);
+  /* o desfoque é o que transforma a linha em neon, e ainda joga um halo
+     para fora da borda */
+  filter: blur(2.5px);
+  animation: girar 5s linear infinite;
+}
+.selo::after { inset: 0; z-index: 1; background: var(--carvao); }
+.selo > * { position: relative; z-index: 2; }
+
+.selo:nth-child(2)::before { animation-delay: -1.25s; }
+.selo:nth-child(3)::before { animation-delay: -2.5s; }
+.selo:nth-child(4)::before { animation-delay: -3.75s; }
+
+@property --giro { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+@keyframes girar { to { --giro: 360deg; } }
+
+/* Sem suporte a ângulo animado, ou com movimento reduzido, fica um
+   contorno fixo discreto no lugar do neon. */
+@media (prefers-reduced-motion: reduce) {
+  .selo::before { animation: none; background: var(--linha); }
+}
+
 .selo h2 { font-size: 1.05rem; margin-bottom: .35rem; letter-spacing: -.025em; }
 .selo p { margin: 0; font-size: .9rem; color: var(--texto-2); }
 .selo .ic--g { margin-bottom: 1.5rem; }
@@ -342,7 +394,9 @@ h3 { font-size: var(--t-h3); letter-spacing: -.02em; }
   background: var(--carvao); border-radius: var(--r-card);
   transition: background-color .25s ease, transform .25s cubic-bezier(.2,.8,.2,1);
 }
-.card:hover { background: var(--grafite); transform: translateY(-4px); }
+/* O hover escurecia também o card branco, e o texto preto dele sumia. */
+.card:not(.card--cta):hover { background: var(--grafite); transform: translateY(-4px); }
+.card--cta:hover { transform: translateY(-4px); }
 .card p { color: var(--texto-2); font-size: .96rem; }
 .card--cta { background: var(--branco); color: var(--preto); justify-content: center; }
 .card--cta p { color: #44444A; }

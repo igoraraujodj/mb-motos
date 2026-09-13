@@ -146,8 +146,8 @@
     var aberto = !!(h && h.abre) && minutosAgora >= paraMinutos(h.abre) && minutosAgora < paraMinutos(h.fecha);
     statusEl.setAttribute('data-aberto', aberto ? 'sim' : 'nao');
     $('[data-status-texto]', statusEl).textContent = aberto
-      ? 'Loja aberta agora, até às ' + h.fecha + '. Fale com o time'
-      : 'Loja fechada, ' + proximaAbertura() + '. Deixe sua mensagem';
+      ? 'Aberta agora até às ' + h.fecha
+      : 'Fechada, ' + proximaAbertura();
     statusEl.setAttribute('href', linkZap(aberto
       ? 'Olá! Vim pelo site e quero falar com o time.'
       : 'Olá! Vim pelo site fora do horário e gostaria de um orçamento.'));
@@ -180,19 +180,16 @@
   }
 
   /* ---------- Barra de chamadas ----------
-     As mensagens giram sozinhas, com pausa no hover para quem quiser ler. */
+     Uma frase por vez, trocando com um fade curto. A altura é fixa e a
+     frase é sempre de uma linha: era a altura variável que fazia a barra
+     inteira pular a cada troca. */
   var barra = $('[data-barra]');
   if (barra && MB.barra && MB.barra.length) {
-    var forte = $('[data-barra-forte]');
-    var fraco = $('[data-barra-fraco]');
+    var textoBarra = $('[data-barra-texto]');
     var atual = 0;
     var parado = false;
 
-    var pinta = function () {
-      forte.textContent = MB.barra[atual].forte;
-      fraco.textContent = MB.barra[atual].fraco;
-    };
-    pinta();
+    textoBarra.textContent = MB.barra[0];
 
     barra.addEventListener('mouseenter', function () { parado = true; });
     barra.addEventListener('mouseleave', function () { parado = false; });
@@ -203,23 +200,11 @@
         barra.classList.add('trocando');
         setTimeout(function () {
           atual = (atual + 1) % MB.barra.length;
-          pinta();
+          textoBarra.textContent = MB.barra[atual];
           barra.classList.remove('trocando');
-        }, 320);
-      }, 4200);
+        }, 300);
+      }, 4500);
     }
-  }
-
-  var contadorBarra = $('[data-contador-barra-texto]');
-  if (contadorBarra) {
-    var pintaContador = function () {
-      var t = tempoDaOferta();
-      contadorBarra.textContent = t.aberta
-        ? 'Acaba em ' + formatarTempo(t.resta)
-        : 'Volta quando a loja ' + t.volta.replace(/^abre /, 'abrir, ');
-    };
-    pintaContador();
-    setInterval(pintaContador, 1000);
   }
 
   /* ---------- Provas do topo ---------- */

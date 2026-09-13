@@ -136,10 +136,10 @@ window.MB = {
      segunda. Nenhuma promete prazo fechado, de propósito.
      ------------------------------------------------------------------ */
   barra: [
-    { forte: 'Revisão completa a partir de R$ 199', fraco: 'com 1 litro de óleo grátis e lavagem de cortesia' },
-    { forte: 'Sua moto pode ficar pronta no mesmo dia', fraco: 'deixe de manhã, retire no fim do dia' },
-    { forte: 'Peça original com garantia', fraco: 'estoque próprio de pneu, kit relação e carenagem' },
-    { forte: 'Quinta do Capacete: 25% no Pix', fraco: 'um dia por semana, enquanto durar o estoque' }
+    'Revisão completa a partir de R$ 199, com óleo grátis',
+    'Sua moto pode ficar pronta no mesmo dia',
+    'Peça original com garantia e estoque próprio',
+    'Quinta do Capacete: 25% de desconto no Pix'
   ],
 
   /* ------------------------------------------------------------------
