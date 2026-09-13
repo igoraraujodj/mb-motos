@@ -351,7 +351,10 @@ h3 { font-size: var(--t-h3); letter-spacing: -.02em; }
   .hero .acoes .btn { flex: 1 1 0; min-width: 0; padding-inline: .75rem; justify-content: center; white-space: nowrap; }
 
   .hero__foto img {
-    width: 100%; height: 100%; object-fit: cover; object-position: center 18%;
+    /* Ancorado no topo da imagem, não numa porcentagem: a altura da caixa
+       muda com a barra do navegador e, em caixa mais baixa, qualquer recorte
+       de cima comia a cabeça dele. A cabeça começa a 6,5% do arquivo. */
+    width: 100%; height: 100%; object-fit: cover; object-position: center top;
     -webkit-mask-image: none; mask-image: none;
   }
   /* Ancorados no pé da cena: com margem normal iam parar acima da foto. */
