@@ -108,7 +108,7 @@ window.MB = {
       itens: [
         'Medida 110/70-16, dianteiro ou traseiro',
         'Troca feita na hora, sem espera',
-        'De bike elétrica fazemos só o pneu, não a revisão'
+        'Em bike elétrica fazemos só a troca do pneu, não a manutenção'
       ],
       obs: 'O valor é do pneu. A mão de obra da troca é cobrada à parte, e você recebe o valor fechado antes do serviço.',
       cta: 'Consultar pneu'
