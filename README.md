@@ -5,8 +5,7 @@ HTML, CSS e JavaScript puros, sem framework e sem build. Abrir o `index.html`
 no navegador já mostra o resultado final.
 
 - **Estratégia e seções:** [`ESTRUTURA.md`](ESTRUTURA.md)
-- **No ar:** https://igoraraujodj.github.io/link-bio/mb-motos/
-- **Espelho na Vercel:** https://mb-motos-mktigor2022-gmailcoms-projects.vercel.app
+- **No ar:** https://mbmotos.vercel.app
 
 Repositório próprio do cliente, separado do portfólio do Igor.
 
