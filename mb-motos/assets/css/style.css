@@ -213,87 +213,96 @@ h3 { font-size: var(--t-h3); letter-spacing: -.02em; }
    sensação de profundidade, em vez de foto e cartão lado a lado.
    Uma máscara dissolve a base da foto no preto do fundo, então a borda do
    recorte nunca aparece como um corte reto. */
-.hero { position: relative; overflow: hidden; padding-block: clamp(2rem, 1rem + 4vw, 4.5rem) clamp(3rem, 2rem + 4vw, 5rem); }
-
-.hero__dono {
-  position: relative; align-self: end; justify-self: center;
-  /* cancela o respiro inferior da seção: ele nasce da borda de baixo, em
-     vez de flutuar acima dela */
-  margin-bottom: calc(-1 * clamp(3rem, 2rem + 4vw, 5rem));
-}
-.hero__dono img {
-  width: 100%; max-width: 640px; height: auto; display: block;
-  /* A base dissolve no preto do fundo, então a borda do recorte nunca
-     aparece como um corte reto. */
-  -webkit-mask-image: linear-gradient(180deg, #000 80%, transparent 100%);
-  mask-image: linear-gradient(180deg, #000 80%, transparent 100%);
+/* ---------- 6. TOPO ----------
+   O personagem manda na cena: foto grande, sangrando na borda direita, com
+   o texto por cima da metade esquerda. O formulário saiu daqui para a
+   seção seguinte, porque disputava espaço com a foto e espremia as duas
+   coisas. O botão do topo leva até ele. */
+.hero {
+  position: relative; overflow: hidden;
+  min-height: min(88vh, 760px);
+  display: flex; flex-direction: column; justify-content: center;
+  padding-block: clamp(2.5rem, 1rem + 5vw, 5rem) clamp(3rem, 1rem + 6vw, 6rem);
 }
 
-/* Assinatura discreta ao pé da foto: quem é aquela pessoa. */
+.hero__foto {
+  position: absolute; right: 0; bottom: 0; z-index: 0;
+  height: 100%; display: flex; align-items: flex-end; justify-content: flex-end;
+  pointer-events: none;
+}
+.hero__foto img {
+  height: 100%; width: auto; max-width: none; object-fit: contain; object-position: bottom right;
+  /* O pé dissolve no preto e a esquerda também, para a foto encostar no
+     texto sem criar uma borda dura no meio da tela. */
+  -webkit-mask-image: linear-gradient(180deg, #000 82%, transparent 100%),
+                      linear-gradient(90deg, transparent 0%, #000 28%);
+  mask-image: linear-gradient(180deg, #000 82%, transparent 100%),
+              linear-gradient(90deg, transparent 0%, #000 28%);
+  -webkit-mask-composite: source-in; mask-composite: intersect;
+}
+
+/* Véu escuro sobre a foto, do lado do texto: é o que garante leitura sem
+   precisar apagar a imagem inteira. */
+.hero::after {
+  content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(90deg, #000 0%, rgba(0,0,0,.88) 32%, rgba(0,0,0,.15) 62%, transparent 80%);
+}
+.hero__conteudo, .hero__selos { position: relative; z-index: 2; }
+.hero__conteudo > * { max-width: 44rem; }
+.hero__sub { font-size: clamp(1.05rem, 1rem + .45vw, 1.25rem); color: var(--texto-2); max-width: 38ch; }
+
 .hero__assinatura {
-  position: absolute; left: 0; bottom: clamp(1rem, 2vw, 2rem);
-  display: grid; gap: .1rem; margin: 0;
+  display: grid; gap: .1rem; margin: 2rem 0 0;
   padding-left: 1rem; border-left: 2px solid var(--amarelo);
 }
 .hero__assinatura strong { font-size: .95rem; letter-spacing: -.02em; }
 .hero__assinatura span { font-family: var(--mono); font-size: var(--t-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--texto-3); }
 
-/* O conteúdo do topo fica sempre acima da foto. */
-.hero__grade { position: relative; z-index: 1; }
+/* Cartõezinhos flutuando sobre a foto, no pé do topo. */
+.hero__selos { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: clamp(2rem, 1rem + 3vw, 3.5rem); }
+.selinho {
+  padding: .85rem 1.25rem; background: var(--branco); color: var(--preto);
+  border-radius: 14px; min-width: 9.5rem;
+}
+.selinho strong { display: block; font-size: 1.5rem; letter-spacing: -.04em; line-height: 1; }
+.selinho span { font-size: .74rem; color: #6E6E76; }
 
-@media (max-width: 999px) {
-  /* No celular ele sai da grade e vira plano de fundo do título, apagado:
-     aqui quem precisa ganhar a leitura é o texto. */
-  .hero__dono {
-    /* No alto, atrás do título. Embaixo ele ficava escondido pelo cartão
-       branco do formulário, que é opaco. */
-    position: absolute; right: -10%; top: 0; bottom: auto; z-index: 0;
-    width: 64%; opacity: .4; margin: 0; pointer-events: none;
+@media (max-width: 900px) {
+  /* Em tela estreita ele desce para o pé do topo, de corpo inteiro: atrás
+     do texto a cara dele ficava escondida, que é justamente o que precisa
+     aparecer. O texto fica em cima, sobre o preto. */
+  .hero {
+    min-height: min(96vh, 780px);
+    justify-content: flex-start;
+    padding-block: 1.5rem calc(var(--barra-h) + 1rem);
   }
-  .hero__dono img {
-    -webkit-mask-image: linear-gradient(180deg, #000 62%, transparent 96%);
-    mask-image: linear-gradient(180deg, #000 62%, transparent 96%);
+  .hero__foto { height: 46%; right: -16%; }
+  .hero__foto img {
+    -webkit-mask-image: linear-gradient(180deg, #000 88%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 88%, transparent 100%);
   }
+  /* Véu forte em cima, onde mora o texto, e leve embaixo, onde ele aparece. */
+  .hero::after {
+    background: linear-gradient(180deg, #000 0%, rgba(0,0,0,.92) 34%, rgba(0,0,0,.45) 60%, transparent 88%);
+  }
+  .hero__conteudo > * { max-width: none; }
+  /* Os cartões ficam logo abaixo dos botões, sobre o peito dele. Com
+     margem automática iam para o rodapé da seção e sumiam atrás da barra
+     fixa de ações. */
+  .hero__selos { margin-top: 1.75rem; }
+  .selinho { flex: 1 1 8rem; min-width: 0; }
   .hero__assinatura { display: none; }
-}
-.hero__grade { display: grid; gap: clamp(2rem, 1rem + 4vw, 4rem); align-items: start; }
-@media (min-width: 1000px) and (max-width: 1279px) {
-  /* Ainda não cabem três colunas: texto e formulário lado a lado, e a foto
-     volta a ser plano de fundo apagado. */
-  .hero__grade { grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); align-items: start; }
-  .hero__dono {
-    position: absolute; right: -4%; top: 0; bottom: auto; z-index: 0;
-    width: 46%; opacity: .3; margin: 0; pointer-events: none;
-  }
-  .hero__assinatura { display: none; }
+  .acoes { margin-bottom: 0; }
 }
 
-@media (min-width: 1280px) {
-  /* Três colunas: o texto convence, a pessoa dá cara ao negócio e o
-     formulário converte, tudo na primeira tela. */
-  .hero__grade {
-    grid-template-columns: minmax(0, 1fr) minmax(0, .82fr) minmax(0, 1fr);
-    align-items: end; gap: clamp(1.5rem, 1rem + 2vw, 3rem);
-  }
-  .hero__texto { align-self: center; }
-  /* Com três colunas a de texto fica mais estreita, e o título no corpo
-     anterior quebrava em quatro linhas. */
-  .hero .display { font-size: clamp(2.4rem, 1.2rem + 2.2vw, 3.5rem); }
+/* ---------- 6b. SEÇÃO DO ORÇAMENTO ---------- */
+.orcamento { border-top: 1px solid var(--linha); }
+.orcamento__grade { display: grid; gap: clamp(1.5rem, 1rem + 3vw, 3.5rem); align-items: center; }
+@media (min-width: 900px) {
+  .orcamento__grade { grid-template-columns: 1fr .9fr; }
 }
-@media (max-width: 999px) {
-  .hero__grade { gap: 1.25rem; }
-  .hero__texto { display: contents; }
-  .status      { order: 1; justify-self: start; margin-bottom: 0; }
-  .hero h1     { order: 2; margin-bottom: 0; }
-  .hero__sub   { order: 3; margin: 0; }
-  .cartao-form { order: 4; margin-top: .5rem; }
-  .hero__nota  { order: 5; margin: 0; }
-}
-
-.hero__sub { font-size: clamp(1.05rem, 1rem + .5vw, 1.3rem); color: var(--texto-2); max-width: 46ch; }
-.hero__nota { max-width: 46ch; font-size: .82rem; line-height: 1.5; color: var(--texto-3); }
-.hero__nota strong { color: var(--amarelo); }
-.display sup { font-size: .4em; vertical-align: super; line-height: 0; }
+.orcamento .titulo { font-size: clamp(1.6rem, 1.1rem + 2vw, 2.6rem); }
+.orcamento .mini { margin-top: 1.25rem; max-width: 44ch; }
 
 /* Status: verde aberto, vermelho fechado, sempre pulsando. */
 .status {
@@ -345,6 +354,10 @@ h3 { font-size: var(--t-h3); letter-spacing: -.02em; }
   .regua__lista li + li { border-left: 0; border-top: 1px solid var(--linha); }
   .regua__lista strong { flex: none; min-width: 4.2rem; font-size: 1.5rem; }
 }
+
+/* O cabeçalho é fixo: sem essa folga, o botão do topo rola até o
+   formulário e o cabeçalho cobre a primeira linha dele. */
+#formulario { scroll-margin-top: 7rem; }
 
 .cartao-form {
   background: var(--branco); color: var(--preto);

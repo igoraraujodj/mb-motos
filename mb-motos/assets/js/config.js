@@ -220,7 +220,7 @@ window.MB = {
      ------------------------------------------------------------------ */
   dono: {
     foto: 'assets/img/dono.webp',
-    fotoMobile: 'assets/img/dono-mob.webp',
+    fotoMobile: null,  /* o corte fechado não serve mais: no celular ele aparece de corpo, no pé */
     nome: 'Maykon Martins',
     cargo: 'Dono da MB Motos'
   },

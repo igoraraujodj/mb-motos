@@ -612,8 +612,12 @@
     img.setAttribute('src', arquivo);
     img.setAttribute('alt', MB.dono.nome + ', ' + MB.dono.cargo);
 
-    $('[data-dono-nome]', dono).textContent = MB.dono.nome;
-    $('[data-dono-cargo]', dono).textContent = MB.dono.cargo;
+    var assinatura = $('[data-assinatura]');
+    if (assinatura) {
+      $('[data-dono-nome]', assinatura).textContent = MB.dono.nome;
+      $('[data-dono-cargo]', assinatura).textContent = MB.dono.cargo;
+      assinatura.hidden = false;
+    }
     dono.hidden = false;
   }
 
