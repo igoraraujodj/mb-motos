@@ -709,6 +709,15 @@
       window.fbq('track', 'PageView');
     }
 
+    if (ids.clarity) {
+      /* snippet oficial do Clarity */
+      (function (c, l, a, r, i, t, y) {
+        c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments); };
+        t = l.createElement(r); t.async = 1; t.src = 'https://www.clarity.ms/tag/' + i;
+        y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+      })(window, document, 'clarity', 'script', ids.clarity);
+    }
+
     if (ids.ga4) {
       var g = document.createElement('script');
       g.async = true;

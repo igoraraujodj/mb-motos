@@ -96,9 +96,10 @@ Qualquer elemento com `data-zap` vira link de WhatsApp automaticamente, e o
 O clique também dispara um evento (`contato_whatsapp`) para o GA4 e para o
 Pixel da Meta, quando as tags estiverem instaladas. Sem as tags, nada quebra.
 
-## Pixel da Meta e GA4
+## Medição
 
-Em `config.js`, no bloco `medicao`, cole o ID do Pixel e o do GA4. As tags
+Em `config.js`, no bloco `medicao`, ficam os três IDs: Pixel da Meta, GA4 e
+Microsoft Clarity (mapa de calor e gravação de sessão, já configurado). As tags
 entram sozinhas. Com os campos vazios, a página não faz requisição nenhuma
 para Meta ou Google.
 

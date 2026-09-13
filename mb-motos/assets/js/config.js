@@ -234,7 +234,10 @@ window.MB = {
      ------------------------------------------------------------------ */
   medicao: {
     metaPixel: '',
-    ga4: ''
+    ga4: '',
+    /* Microsoft Clarity: mapa de calor e gravação de sessão. É o que mostra
+       onde a pessoa trava antes de clicar. */
+    clarity: 'yhq5md4c9r'
   },
 
   instagram: 'mbmotoss',
