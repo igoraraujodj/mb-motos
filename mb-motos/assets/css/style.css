@@ -293,12 +293,24 @@ h3 { font-size: var(--t-h3); letter-spacing: -.02em; }
   font-style: normal; color: var(--preto);
   background: linear-gradient(transparent 64%, var(--amarelo) 0);
 }
+.painel__lista { list-style: none; margin: 0; padding: 0; display: grid; gap: .55rem; }
+.painel__lista li {
+  position: relative; padding-left: 1.5rem;
+  font-size: .88rem; line-height: 1.4; color: #55555C;
+}
+/* Visto desenhado em CSS: um ícone a mais no sprite só para isso não paga. */
+.painel__lista li::before {
+  content: ''; position: absolute; left: 0; top: .28rem;
+  width: .95rem; height: .5rem;
+  border-left: 2px solid var(--preto); border-bottom: 2px solid var(--preto);
+  transform: rotate(-45deg) scale(.8);
+}
 .painel__linha {
-  margin: 0; padding-top: 1rem; border-top: 1px solid #E4E4E7;
+  margin: auto 0 0; padding-top: 1rem; border-top: 1px solid #E4E4E7;
   font-size: .82rem; color: #6E6E76;
 }
 
-.painel__depo { margin: auto 0 0; padding-top: 1rem; border-top: 1px solid #E4E4E7; }
+.painel__depo { margin: 0; padding-top: 1rem; border-top: 1px solid #E4E4E7; }
 .painel__quem { display: flex; align-items: center; gap: .65rem; margin-bottom: .65rem; }
 .painel__quem .depo__inicial { width: 36px; height: 36px; font-size: .78rem; }
 .painel__depo figcaption strong { display: block; font-size: .88rem; letter-spacing: -.01em; }
@@ -331,7 +343,7 @@ h3 { font-size: var(--t-h3); letter-spacing: -.02em; }
     position: relative; right: auto; left: auto; top: auto; bottom: auto;
     order: 2; flex: none; display: block; overflow: hidden;
     margin: 1.25rem -1.25rem 0;
-    height: clamp(280px, 40vh, 440px);
+    height: clamp(280px, 40vh, 420px);
   }
   /* Dois botões na mesma linha: empilhados, empurravam a foto para fora
      da primeira tela. */
@@ -349,6 +361,12 @@ h3 { font-size: var(--t-h3); letter-spacing: -.02em; }
   }
   .selinho { flex: 1 1 8rem; min-width: 0; }
   .acoes { margin-bottom: 0; }
+}
+
+/* No tablet a faixa do topo é larga demais: a foto era ampliada até virar
+   um close no rosto dele. Aqui ela ganha largura fixa e fica centrada. */
+@media (min-width: 601px) and (max-width: 900px) {
+  .hero__foto { width: 440px; max-width: 100%; margin-inline: auto; }
 }
 
 @media (max-width: 420px) {

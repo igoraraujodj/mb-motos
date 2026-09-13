@@ -651,8 +651,12 @@
       escreveu('mb_mascote_fechado', '1');
     });
 
+    /* O gatilho é o fim do topo, não um número fixo: em tela alta 600px
+       ainda mostrava os cartõezinhos do topo e o balão caía em cima deles. */
+    var topo = $('.hero');
     var mostrar = function () {
-      if (window.scrollY < 600) return;
+      var limite = topo ? topo.offsetTop + topo.offsetHeight - 120 : 600;
+      if (window.scrollY < limite) return;
       mascote.hidden = false;
       window.removeEventListener('scroll', mostrar);
     };
