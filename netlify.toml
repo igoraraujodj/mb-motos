@@ -1,12 +1,6 @@
-# Publicação no Netlify (grátis), para o site ganhar um endereço sem o nome
-# do Igor. No painel do Netlify, ao conectar este repositório:
-#
-#   Base directory:      mb-motos
-#   Build command:       (deixe vazio, o site não tem build)
-#   Publish directory:   mb-motos
-#
-# Depois, em Site configuration → Change site name, defina "mbmotos" e o
-# endereço vira https://mbmotos.netlify.app
+# Publicação no Netlify. Ao conectar este repositório, deixe Build command
+# vazio e Publish directory como ".": o site está na raiz e não tem build.
+# Em Site configuration → Change site name, defina "mbmotos".
 
 [build]
   publish = "."

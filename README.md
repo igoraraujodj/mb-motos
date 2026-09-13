@@ -8,8 +8,7 @@ no navegador já mostra o resultado final.
 - **No ar:** https://igoraraujodj.github.io/link-bio/mb-motos/
 - **Espelho na Vercel:** https://mb-motos-mktigor2022-gmailcoms-projects.vercel.app
 
-Esta pasta é independente do portfólio que vive na raiz do repositório. O
-`build.js` da raiz não gera nem apaga nada daqui.
+Repositório próprio do cliente, separado do portfólio do Igor.
 
 ## Arquivos
 
@@ -23,14 +22,8 @@ assets/img/           favicon e imagens
 
 ## Vercel
 
-O `vercel.json` na raiz do repositório existe para um motivo: o projeto da
-Vercel está ligado a este repositório inteiro, e sem essa configuração ele
-publicaria a raiz, ou seja, o portfólio, no lugar do site do cliente. O
-`outputDirectory` aponta para `mb-motos`, então a Vercel serve esta pasta
-como raiz do site, sem depender de ninguém acertar o campo Root Directory
-no painel.
-
-Não há build: `buildCommand` e `installCommand` ficam vazios de propósito.
+O `vercel.json` apenas confirma que não há build e define o cache. O site é
+a própria raiz do repositório.
 
 ## Endereço do site
 
@@ -38,11 +31,10 @@ Hoje: `https://igoraraujodj.github.io/link-bio/mb-motos/` (GitHub Pages).
 
 Para um endereço sem o nome pessoal, sem custo, há dois caminhos:
 
-1. **Netlify** (mais rápido): conecte este repositório, com Base directory
-   `mb-motos`, sem build command. O `netlify.toml` desta pasta cuida do
-   resto. Em Change site name, defina `mbmotos` e o endereço vira
-   `https://mbmotos.netlify.app`. Cloudflare Pages funciona igual, com
-   output directory `mb-motos`, e entrega `mbmotos.pages.dev`.
+1. **Netlify** (mais rápido): conecte este repositório, sem build command.
+   Em Change site name, defina `mbmotos` e o endereço vira
+   `https://mbmotos.netlify.app`. Cloudflare Pages funciona igual e entrega
+   `mbmotos.pages.dev`.
 2. **Conta própria do cliente no GitHub**: criando a conta `mbmotos` e um
    repositório `mbmotos.github.io`, o site passa a viver em
    `https://mbmotos.github.io`. Mais trabalhoso, porém é o cliente dono do
