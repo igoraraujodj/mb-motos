@@ -612,13 +612,20 @@
     img.setAttribute('src', arquivo);
     img.setAttribute('alt', MB.dono.nome + ', ' + MB.dono.cargo);
 
-    var assinatura = $('[data-assinatura]');
-    if (assinatura) {
-      $('[data-dono-nome]', assinatura).textContent = MB.dono.nome;
-      $('[data-dono-cargo]', assinatura).textContent = MB.dono.cargo;
-      assinatura.hidden = false;
-    }
     dono.hidden = false;
+  }
+
+  /* ---------- Depoimento do painel branco do topo ----------
+     Reaproveita a primeira avaliação da config: prova social já na
+     primeira tela, sem a pessoa precisar rolar até o carrossel. */
+  var painelDepo = $('[data-painel-depo]');
+  if (painelDepo && MB.depoimentos && MB.depoimentos.length) {
+    var primeiro = MB.depoimentos[0];
+    $('[data-painel-inicial]', painelDepo).textContent = iniciais(primeiro.nome);
+    $('[data-painel-nome]', painelDepo).textContent = primeiro.nome;
+    $('[data-painel-moto]', painelDepo).textContent = primeiro.moto || '';
+    $('[data-painel-texto]', painelDepo).textContent = '\u201C' + primeiro.texto + '\u201D';
+    painelDepo.hidden = false;
   }
 
   /* ---------- Balão flutuante ----------

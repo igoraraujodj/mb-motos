@@ -136,52 +136,73 @@
 
 <!-- ========== HERO ========== -->
 <section class="hero" aria-labelledby="hero-titulo">
-  <div class="hero__foto" data-dono hidden>
-    <img data-dono-img alt="" loading="eager" decoding="async" fetchpriority="high">
-  </div>
 
-  <div class="wrap hero__conteudo">
-    <a class="status" data-status data-zap data-servico="atendimento">
-      <span class="status__ponto" aria-hidden="true"></span>
-      <span class="status__texto" data-status-texto>Carregando horário</span>
-    </a>
+  <div class="hero__cena">
+    <div class="hero__foto" data-dono hidden>
+      <img data-dono-img alt="" loading="eager" decoding="async" fetchpriority="high">
+    </div>
 
-    <h1 id="hero-titulo" class="display">
-      <span class="linha">Sua moto precisa</span>
-      <span class="linha">de revisão?</span>
-      <span class="linha linha--menor"><em>Você está no lugar certo</em></span>
-    </h1>
-
-    <p class="hero__sub">
-      Revisão, mecânica geral, pneu, kit relação e carenagem no mesmo lugar.
-      Peça original em estoque e orçamento fechado antes de começar.
-    </p>
-
-    <div class="acoes">
-      <a class="btn btn--claro btn--g" href="#formulario">Agendar revisão</a>
-      <a class="btn btn--linha btn--g" data-zap data-servico="atendimento geral">
-        <svg class="ic" aria-hidden="true"><use href="#ic-whats"/></svg>WhatsApp
+    <div class="hero__conteudo">
+      <a class="status" data-status data-zap data-servico="atendimento">
+        <span class="status__ponto" aria-hidden="true"></span>
+        <span class="status__texto" data-status-texto>Carregando horário</span>
       </a>
-    </div>
 
-    <p class="hero__assinatura" data-assinatura hidden>
-      <strong data-dono-nome></strong>
-      <span data-dono-cargo></span>
+      <h1 id="hero-titulo" class="display">
+        <span class="linha">Sua moto precisa</span>
+        <span class="linha">de revisão?</span>
+        <span class="linha linha--menor"><em>Você está no lugar certo</em></span>
+      </h1>
+
+      <p class="hero__sub">
+        Revisão, mecânica geral, pneu, kit relação e carenagem no mesmo lugar.
+        Peça original em estoque e orçamento fechado antes de começar.
+      </p>
+
+      <div class="acoes">
+        <a class="btn btn--claro btn--g" href="#formulario">Agendar revisão</a>
+        <a class="btn btn--linha btn--g" data-zap data-servico="atendimento geral">
+          <svg class="ic" aria-hidden="true"><use href="#ic-whats"/></svg>WhatsApp
+        </a>
+      </div>
+
+      <div class="hero__selos">
+        <div class="selinho">
+          <strong>R$ 199</strong>
+          <span>revisão com óleo grátis</span>
+        </div>
+        <div class="selinho">
+          <strong>20 min</strong>
+          <span>troca de kit relação</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <aside class="painel" aria-label="Atendimento de hoje">
+    <p class="painel__rotulo">Atendimento</p>
+
+    <p class="painel__recado">
+      Hoje a revisão sai <em>a partir de R$ 199</em>, com 1 litro de óleo
+      grátis e a moto entregue lavada. <em>Quer agendar a sua?</em>
     </p>
-  </div>
 
-  <!-- Cartõezinhos sobre a foto: número curto, sem texto corrido. -->
-  <div class="wrap hero__selos">
-    <div class="selinho">
-      <strong>R$ 199</strong>
-      <span>revisão com óleo grátis</span>
-    </div>
-    <div class="selinho">
-      <strong>20 min</strong>
-      <span>troca de kit relação</span>
-    </div>
-  </div>
+    <p class="painel__linha">Peça original. Prazo combinado. Garantia por escrito.</p>
+
+    <figure class="painel__depo" data-painel-depo hidden>
+      <div class="painel__quem">
+        <span class="depo__inicial" data-painel-inicial aria-hidden="true"></span>
+        <figcaption>
+          <strong data-painel-nome></strong>
+          <span data-painel-moto></span>
+        </figcaption>
+      </div>
+      <blockquote data-painel-texto></blockquote>
+    </figure>
+  </aside>
+
 </section>
+
 
 <!-- ========== ORÇAMENTO ========== -->
 <section class="secao secao--curta orcamento" aria-labelledby="orcamento-titulo">
