@@ -219,8 +219,8 @@ window.MB = {
      Deixe em null e o topo segue sem a foto, sem quebrar nada.
      ------------------------------------------------------------------ */
   dono: {
-    foto: null,        /* ex.: 'assets/img/dono.png' */
-    fotoMobile: null,  /* ex.: 'assets/img/dono-mobile.png' */
+    foto: 'assets/img/dono.webp',
+    fotoMobile: 'assets/img/dono-mob.webp',
     nome: 'Maykon Martins',
     cargo: 'Dono da MB Motos'
   },

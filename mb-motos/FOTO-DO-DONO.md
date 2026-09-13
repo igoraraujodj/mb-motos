@@ -1,7 +1,11 @@
 # Foto do dono no topo do site
 
-Especificação do arquivo e prompts de geração. O encaixe já está pronto no
-código: quando o arquivo existir, é só apontar em `config.js`.
+**No ar.** A foto enviada foi recortada, otimizada e está publicada como
+`assets/img/dono.webp` (1000x1458, 97 KB) e `assets/img/dono-mob.webp`
+(720x650, 41 KB), esta última fechada do peito para cima.
+
+O documento segue como referência para trocar a foto depois: a
+especificação do arquivo e os prompts de geração estão abaixo.
 
 ---
 
@@ -9,8 +13,12 @@ código: quando o arquivo existir, é só apontar em `config.js`.
 
 | Arquivo | Uso | Medida | Formato |
 |---|---|---|---|
-| `dono.png` | Desktop, coluna do meio | **1200 x 1600 px** (3:4) | PNG com **fundo transparente** |
-| `dono-mob.png` | Celular, plano de fundo do título | **900 x 1200 px** (3:4) | PNG com **fundo transparente** |
+| `dono.webp` | Desktop, coluna do meio | ~1000 px de largura | WebP com **fundo transparente** |
+| `dono-mob.webp` | Celular, plano de fundo do título | ~720 px de largura | WebP com **fundo transparente** |
+
+Envie em PNG transparente que eu converto: o WebP com transparência pesa um
+terço do PNG, e o topo é a primeira coisa que carrega para quem vem do
+anúncio. O PNG original tinha 1 MB e virou 97 KB sem perda visível.
 
 **Por que recorte transparente, e não foto com fundo:** o topo do site é
 preto, e qualquer fundo, mesmo escuro, aparece como um retângulo mais claro
