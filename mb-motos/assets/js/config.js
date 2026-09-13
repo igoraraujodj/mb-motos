@@ -80,8 +80,7 @@ window.MB = {
       destaque: false,
       selo: 'Toda quinta-feira',
       titulo: 'Quinta do Capacete',
-      /* troque por 'assets/img/oferta-capacete.jpg' quando a foto chegar */
-      foto: null,
+      foto: 'assets/img/oferta-capacete.webp',
       preco: '25% OFF',
       precoNota: 'no Pix ou dinheiro',
       diaSemana: 4,
@@ -100,8 +99,7 @@ window.MB = {
       destaque: false,
       selo: 'Novidade',
       titulo: 'Pneu de bike elétrica aro 16',
-      /* troque por 'assets/img/oferta-pneu-bike.jpg' quando a foto chegar */
-      foto: null,
+      foto: 'assets/img/oferta-pneu-bike.webp',
       /* CONFERIR com o cliente: valor final e se a montagem está inclusa */
       preco: 'R$ 300',
       precoNota: 'o pneu, mão de obra à parte',
