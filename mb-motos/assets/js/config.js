@@ -72,7 +72,7 @@ window.MB = {
       ],
       /* CONFERIR a lista de modelos com o cliente */
       obs: 'Válida para CG 125 (2009 a 2018), CG 150, Titan e Fan até 160cc. Um litro de óleo por moto. O valor final depende do modelo e do estado da moto: peças, quando necessárias, são orçadas e aprovadas por você antes do serviço. Revisão com agendamento pelo WhatsApp.',
-      cta: 'Agendar minha revisão'
+      cta: 'Agendar revisão'
     },
     {
       id: 'capacete',
@@ -91,7 +91,7 @@ window.MB = {
         'Só às quintas, enquanto durar o estoque'
       ],
       obs: 'Desconto sobre o preço de etiqueta, válido para os capacetes disponíveis na loja.',
-      cta: 'Ver capacetes disponíveis'
+      cta: 'Ver os capacetes'
     },
     {
       id: 'bike-eletrica',
@@ -111,7 +111,7 @@ window.MB = {
         'De bike elétrica fazemos só o pneu, não a revisão'
       ],
       obs: 'O valor é do pneu. A mão de obra da troca é cobrada à parte, e você recebe o valor fechado antes do serviço.',
-      cta: 'Consultar pneu da minha bike'
+      cta: 'Consultar pneu'
     }
   ],
 
