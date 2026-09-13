@@ -343,7 +343,7 @@ h3 { font-size: var(--t-h3); letter-spacing: -.02em; }
     position: relative; right: auto; left: auto; top: auto; bottom: auto;
     order: 2; flex: none; display: block; overflow: hidden;
     margin: 1.25rem -1.25rem 0;
-    height: clamp(280px, 40vh, 420px);
+    height: clamp(340px, 50vh, 520px);
   }
   /* Dois botões na mesma linha: empilhados, empurravam a foto para fora
      da primeira tela. */
@@ -355,12 +355,19 @@ h3 { font-size: var(--t-h3); letter-spacing: -.02em; }
        muda com a barra do navegador e, em caixa mais baixa, qualquer recorte
        de cima comia a cabeça dele. A cabeça começa a 6,5% do arquivo. */
     width: 100%; height: 100%; object-fit: cover; object-position: center top;
-    -webkit-mask-image: none; mask-image: none;
+    /* O pé da foto dissolve no preto em três passos. Sem isso o recorte
+       termina seco e aparece a silhueta do corte; com a dissolvida, é o
+       próprio fundo da cena que continua, e os cartõezinhos caem nessa
+       faixa já escura em vez de tapar o tronco dele. */
+    -webkit-mask-image: linear-gradient(180deg, #000 66%, rgba(0,0,0,.6) 84%, rgba(0,0,0,.18) 94%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 66%, rgba(0,0,0,.6) 84%, rgba(0,0,0,.18) 94%, transparent 100%);
   }
-  /* Ancorados no pé da cena: com margem normal iam parar acima da foto. */
+  /* Depois da foto, nunca em cima dela: por cima tapavam o tronco e os
+     braços cruzados, que é o que a foto tem de melhor. Sobem só o tanto de
+     encostar na faixa já dissolvida, para não virar um bloco solto. */
   .hero__selos {
-    position: absolute; z-index: 3; left: 1.25rem; right: 1.25rem; bottom: 1.25rem;
-    margin-top: 0; gap: .5rem;
+    order: 3; position: relative; z-index: 3;
+    margin: -1.5rem -.25rem 1.25rem; gap: .5rem;
   }
   .selinho { flex: 1 1 8rem; min-width: 0; }
   .acoes { margin-bottom: 0; }
