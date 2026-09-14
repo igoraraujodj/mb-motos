@@ -234,6 +234,39 @@ window.MB = {
   },
 
   /* ------------------------------------------------------------------
+     DIA DA OFERTA
+     Tudo o que muda a página no dia da Quinta do Capacete mora aqui.
+     `diaSemana`: 0 é domingo, 4 é quinta. Para desligar sem apagar nada,
+     basta `ativo: false`. -------------------------------------------- */
+  diaDaOferta: {
+    diaSemana: 4,
+
+    /* A barra do topo troca de cara no dia: para de girar as frases e vira
+       um aviso fixo, com o ponto pulsando, que leva direto para a conversa. */
+    aoVivo: {
+      ativo: true,
+      texto: 'Quinta do Capacete: 25% de desconto no Pix ou dinheiro',
+      cta: 'Quero o meu',
+      mensagem: 'Olá! Vim pelo site e quero aproveitar a Quinta do Capacete hoje.'
+    },
+
+    /* Aviso que abre por cima da página. Não abre de cara: espera a pessoa
+       ler o topo, aparece uma vez por dia e some no primeiro fechar.
+       `imagem` aceita o criativo (ex.: 'assets/img/quinta-capacete.jpg');
+       em null, o aviso entra só com texto e continua funcionando. */
+    aviso: {
+      ativo: true,
+      atrasoSegundos: 12,
+      imagem: null,
+      titulo: 'Hoje é Quinta do Capacete',
+      texto: '25% de desconto no Pix ou dinheiro, 15% no cartão. Vale para os capacetes disponíveis na loja, enquanto durar o estoque.',
+      cta: 'Quero o meu capacete',
+      mensagem: 'Olá! Vi o aviso da Quinta do Capacete no site e quero ver os modelos disponíveis.',
+      recusa: 'Agora não'
+    }
+  },
+
+  /* ------------------------------------------------------------------
      MEDIÇÃO
      Cole os IDs aqui e as tags entram sozinhas na página. Enquanto os
      campos estiverem vazios, nada é carregado: o site não faz requisição

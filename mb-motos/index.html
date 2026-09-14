@@ -22,7 +22,7 @@
 
 <link rel="icon" href="assets/img/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="assets/img/favicon.png">
-<link rel="stylesheet" href="assets/css/style.css?v=20260913k">
+<link rel="stylesheet" href="assets/css/style.css?v=20260914a">
 </head>
 
 <body>
@@ -124,6 +124,7 @@
 <section class="barra-oferta" aria-label="Ofertas em destaque">
   <div class="wrap barra-oferta__linha">
     <a class="barra-oferta__msg" href="#ofertas" data-barra>
+      <span class="vivo" data-barra-vivo hidden><span class="vivo__ponto" aria-hidden="true"></span>Ao vivo agora</span>
       <span data-barra-texto></span>
       <svg class="ic" aria-hidden="true"><use href="#ic-seta"/></svg>
     </a>
@@ -578,6 +579,28 @@
   </div>
 </footer>
 
+<!-- ========== AVISO DO DIA DA OFERTA ==========
+     Só entra no dia configurado, depois de um tempo de leitura e uma vez
+     por dia. Nasce escondido: quem decide mostrar é o main.js. -->
+<div class="aviso" data-aviso hidden>
+  <div class="aviso__fundo" data-aviso-fechar></div>
+
+  <div class="aviso__cartao" role="dialog" aria-modal="true" aria-labelledby="aviso-titulo">
+    <button class="aviso__x" type="button" data-aviso-fechar aria-label="Fechar aviso">×</button>
+
+    <img class="aviso__img" data-aviso-img alt="" hidden>
+
+    <div class="aviso__corpo">
+      <p class="aviso__selo"><span class="vivo__ponto" aria-hidden="true"></span><span data-aviso-selo>Ao vivo agora</span></p>
+      <h2 class="aviso__titulo" id="aviso-titulo" data-aviso-titulo></h2>
+      <p class="aviso__texto" data-aviso-texto></p>
+
+      <a class="btn btn--zap btn--bloco" data-aviso-cta target="_blank" rel="noopener"></a>
+      <button class="aviso__recusa" type="button" data-aviso-fechar data-aviso-recusa></button>
+    </div>
+  </div>
+</div>
+
 <!-- ========== BALÃO FLUTUANTE ========== -->
 <div class="mascote" data-mascote hidden>
   <button class="mascote__fechar" type="button" data-mascote-fechar aria-label="Fechar convite de atendimento">×</button>
@@ -598,7 +621,7 @@
 </nav>
 
 <script type="application/ld+json" data-schema></script>
-<script src="assets/js/config.js?v=20260913k"></script>
-<script src="assets/js/main.js?v=20260913k"></script>
+<script src="assets/js/config.js?v=20260914a"></script>
+<script src="assets/js/main.js?v=20260914a"></script>
 </body>
 </html>

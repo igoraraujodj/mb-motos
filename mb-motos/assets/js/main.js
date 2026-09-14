@@ -169,18 +169,44 @@
      Uma frase por vez, trocando com um fade curto. A altura é fixa e a
      frase é sempre de uma linha: era a altura variável que fazia a barra
      inteira pular a cada troca. */
+  var dia = MB.diaDaOferta || {};
+  var eODia = dia.diaSemana !== undefined && dia.diaSemana === hoje;
+
   var barra = $('[data-barra]');
   if (barra && MB.barra && MB.barra.length) {
     var textoBarra = $('[data-barra-texto]');
     var atual = 0;
     var parado = false;
 
-    textoBarra.textContent = MB.barra[0];
+    /* No dia da oferta a barra para de girar e vira aviso fixo: uma frase
+       que muda a cada 4s não combina com "ao vivo agora", e o clique passa
+       a abrir a conversa em vez de rolar até a seção. */
+    var barraAoVivo = eODia && dia.aoVivo && dia.aoVivo.ativo;
+    if (barraAoVivo) {
+      var selo = $('[data-barra-vivo]');
+      if (selo) selo.hidden = false;
+      barra.closest('.barra-oferta').classList.add('barra-oferta--vivo');
+      textoBarra.textContent = dia.aoVivo.texto;
+      barra.setAttribute('href', linkZap(dia.aoVivo.mensagem));
+      barra.setAttribute('target', '_blank');
+      barra.setAttribute('rel', 'noopener');
+      barra.addEventListener('click', function () {
+        medir('contato_whatsapp', 'barra ao vivo', 'Contact');
+      });
+      var ctaBarra = $('.barra-oferta__cta');
+      if (ctaBarra) {
+        ctaBarra.textContent = dia.aoVivo.cta;
+        ctaBarra.setAttribute('href', linkZap(dia.aoVivo.mensagem));
+        ctaBarra.setAttribute('data-servico', 'barra ao vivo');
+      }
+    } else {
+      textoBarra.textContent = MB.barra[0];
+    }
 
     barra.addEventListener('mouseenter', function () { parado = true; });
     barra.addEventListener('mouseleave', function () { parado = false; });
 
-    if (!matchMedia('(prefers-reduced-motion: reduce)').matches && MB.barra.length > 1) {
+    if (!barraAoVivo && !matchMedia('(prefers-reduced-motion: reduce)').matches && MB.barra.length > 1) {
       setInterval(function () {
         if (parado) return;
         barra.classList.add('trocando');
@@ -633,6 +659,64 @@
     painelDepo.hidden = false;
   }
 
+  /* ---------- Aviso do dia da oferta ----------
+     Só no dia certo, e nunca de cara: quem chega de anúncio veio ler o
+     topo, e um aviso por cima antes disso derruba a conversa em vez de
+     ajudar. Espera o tempo da config, aparece uma vez por dia e some no
+     primeiro fechar. */
+  var aviso = $('[data-aviso]');
+  if (aviso && eODia && dia.aviso && dia.aviso.ativo && !leuLocal(chaveDoDia())) {
+    var cfg = dia.aviso;
+
+    if (cfg.imagem) {
+      var imgAviso = $('[data-aviso-img]', aviso);
+      imgAviso.setAttribute('src', cfg.imagem);
+      imgAviso.setAttribute('alt', cfg.titulo);
+      imgAviso.hidden = false;
+    }
+    $('[data-aviso-titulo]', aviso).textContent = cfg.titulo;
+    $('[data-aviso-texto]', aviso).textContent = cfg.texto;
+    $('[data-aviso-recusa]', aviso).textContent = cfg.recusa || 'Agora não';
+
+    var ctaAviso = $('[data-aviso-cta]', aviso);
+    ctaAviso.textContent = cfg.cta;
+    ctaAviso.setAttribute('href', linkZap(cfg.mensagem));
+    ctaAviso.addEventListener('click', function () {
+      medir('contato_whatsapp', 'aviso do dia', 'Contact');
+      fecharAviso();
+    });
+
+    var focoAnterior = null;
+
+    var fecharAviso = function () {
+      aviso.hidden = true;
+      document.body.style.overflow = '';
+      escreveuLocal(chaveDoDia(), '1');
+      document.removeEventListener('keydown', teclaAviso);
+      if (focoAnterior && focoAnterior.focus) focoAnterior.focus();
+    };
+
+    var teclaAviso = function (e) {
+      if (e.key === 'Escape') fecharAviso();
+    };
+
+    $$('[data-aviso-fechar]', aviso).forEach(function (el) {
+      el.addEventListener('click', fecharAviso);
+    });
+
+    setTimeout(function () {
+      /* Se a pessoa já foi para o WhatsApp ou saiu da aba, não faz sentido
+         empilhar um aviso que ela vai encontrar de volta sem contexto. */
+      if (document.hidden) return;
+      focoAnterior = document.activeElement;
+      aviso.hidden = false;
+      document.body.style.overflow = 'hidden';
+      document.addEventListener('keydown', teclaAviso);
+      $('.aviso__x', aviso).focus();
+      medir('aviso_do_dia', 'exibido');
+    }, (cfg.atrasoSegundos || 12) * 1000);
+  }
+
   /* ---------- Balão flutuante ----------
      Só aparece depois que a pessoa rola para fora do topo: no celular ele
      cobriria justamente o formulário. Quem fecha não vê de novo na visita. */
@@ -667,6 +751,19 @@
     };
     window.addEventListener('scroll', mostrar, { passive: true });
     mostrar();
+  }
+
+  /* O aviso do dia usa localStorage, e não sessionStorage: quem já fechou
+     não deve vê-lo de novo ao voltar no mesmo dia, nem em outra aba. A
+     chave carrega a data, então no dia seguinte ele volta sozinho. */
+  function chaveDoDia() {
+    return 'mb_aviso_' + agora.getFullYear() + '-' + (agora.getMonth() + 1) + '-' + agora.getDate();
+  }
+  function leuLocal(chave) {
+    try { return localStorage.getItem(chave); } catch (e) { return null; }
+  }
+  function escreveuLocal(chave, valor) {
+    try { localStorage.setItem(chave, valor); } catch (e) { /* segue o jogo */ }
   }
 
   /* sessionStorage pode estourar em aba anônima: nunca deixa quebrar a página */
