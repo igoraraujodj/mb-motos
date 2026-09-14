@@ -83,6 +83,14 @@ body {
 h1, h2, h3 { margin: 0 0 .5em; font-weight: 700; line-height: 1.05; letter-spacing: -.03em; }
 p { margin: 0 0 1rem; }
 img, svg, video, iframe { max-width: 100%; display: block; }
+
+/* O atributo `hidden` do HTML vale por uma regra `display: none` do próprio
+   navegador, e qualquer `display` escrito aqui ganha dela — foi assim que o
+   aviso do dia e a marca "ao vivo" apareceram fora do dia, vazios, porque o
+   JS só os preenche quando é para mostrar. Esta regra devolve a palavra
+   final ao atributo. Ela não atrapalha quem é mostrado por JS: nesse caso o
+   atributo sai do elemento e a regra deixa de valer. */
+[hidden] { display: none !important; }
 a { color: inherit; text-decoration: none; }
 
 :focus-visible { outline: 2px solid var(--amarelo); outline-offset: 3px; border-radius: 6px; }
