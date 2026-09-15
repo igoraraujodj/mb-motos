@@ -1009,8 +1009,12 @@ h3 { font-size: var(--t-h3); letter-spacing: -.02em; }
   font-size: 1.15rem; line-height: 1;
 }
 .aviso__x:hover { background: var(--branco); color: var(--preto); }
-.aviso__img { width: 100%; height: auto; display: block; }
+.aviso__img { width: 100%; height: auto; display: block; border-bottom: 1px solid var(--linha); }
 .aviso__corpo { padding: clamp(1.25rem, 1rem + 1.5vw, 1.75rem); display: grid; gap: .85rem; }
+/* Aviso puxado pela arte: sem título nem texto, o corpo é só o botão, então
+   a folga de cima encolhe para o cartão não ficar com um vão morto entre a
+   imagem e o verde. */
+.aviso__img:not([hidden]) + .aviso__corpo { padding-top: 1.1rem; gap: .7rem; }
 .aviso__selo {
   display: inline-flex; align-items: center; gap: .45rem; margin: 0; justify-self: start;
   font-family: var(--mono); font-size: var(--t-mono); letter-spacing: .1em;

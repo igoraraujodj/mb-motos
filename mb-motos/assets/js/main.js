@@ -671,11 +671,28 @@
     if (cfg.imagem) {
       var imgAviso = $('[data-aviso-img]', aviso);
       imgAviso.setAttribute('src', cfg.imagem);
-      imgAviso.setAttribute('alt', cfg.titulo);
+      imgAviso.setAttribute('alt', cfg.imagemAlt || cfg.titulo || '');
       imgAviso.hidden = false;
     }
-    $('[data-aviso-titulo]', aviso).textContent = cfg.titulo;
-    $('[data-aviso-texto]', aviso).textContent = cfg.texto;
+
+    /* Quando o criativo já diz tudo, título e texto vêm vazios na config e
+       somem daqui: deixá-los presentes e em branco só somaria espaço morto
+       e empurraria o botão para fora da tela no celular. O selo "ao vivo"
+       acompanha o bloco de texto — sozinho, sobre a arte, vira ruído. */
+    var elTitulo = $('[data-aviso-titulo]', aviso);
+    var elTexto = $('[data-aviso-texto]', aviso);
+    elTitulo.textContent = cfg.titulo || '';
+    elTexto.textContent = cfg.texto || '';
+    elTitulo.hidden = !cfg.titulo;
+    elTexto.hidden = !cfg.texto;
+    if (!cfg.titulo && !cfg.texto) {
+      $('.aviso__selo', aviso).hidden = true;
+      /* Sem título visível não há o que o `aria-labelledby` aponte: o nome
+         da janela passa a ser a descrição da arte. */
+      var cartao = $('.aviso__cartao', aviso);
+      cartao.removeAttribute('aria-labelledby');
+      cartao.setAttribute('aria-label', cfg.imagemAlt || 'Oferta do dia');
+    }
     $('[data-aviso-recusa]', aviso).textContent = cfg.recusa || 'Agora não';
 
     var ctaAviso = $('[data-aviso-cta]', aviso);

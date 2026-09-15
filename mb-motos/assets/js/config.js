@@ -257,9 +257,15 @@ window.MB = {
     aviso: {
       ativo: true,
       atrasoSegundos: 12,
-      imagem: null,
-      titulo: 'Hoje é Quinta do Capacete',
-      texto: '25% de desconto no Pix ou dinheiro, 15% no cartão. Vale para os capacetes disponíveis na loja, enquanto durar o estoque.',
+      imagem: 'assets/img/quinta-capacete.webp',
+      /* Descrição da arte. Como o criativo carrega toda a informação, é ela
+         que leitor de tela e buscador enxergam no lugar. */
+      imagemAlt: 'Quinta do Capacete: 25% de desconto no dinheiro ou Pix e 15% no cartão.',
+      /* Título e texto ficam vazios de propósito: o criativo já traz o nome
+         da oferta e os dois descontos, e repetir aqui empurrava o botão
+         para fora da tela no celular. Preencha se um dia a arte sair. */
+      titulo: '',
+      texto: '',
       cta: 'Quero o meu capacete',
       mensagem: 'Olá! Vi o aviso da Quinta do Capacete no site e quero ver os modelos disponíveis.',
       recusa: 'Agora não'
